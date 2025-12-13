@@ -1,7 +1,7 @@
 services:
-  postgres:
-    image: postgres:latest
-    container_name: calories_app_db
+  database:
+    image: postgres:16
+    container_name: dont-eat-so-much-db
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -10,7 +10,34 @@ services:
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/18/main
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dont-eat-so-much-server
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+    ports:
+      - "3000:3000"
+    command: sh -c "npm run db:migrate && npm run start:dev"
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
