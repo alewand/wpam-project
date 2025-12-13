@@ -1,0 +1,21 @@
+{
+    "welcome": {
+        "title": "Witaj",
+        "subTitle": "w DON'T EAT SO MUCH",
+        "description": "Cieszymy się, że z nami jesteś!\n Co cię dzisiaj sprowadza?"
+    },
+    "login": {
+        "title": "Logowanie",
+        "button": "Zaloguj się"
+    },
+    "register": {
+        "title": "Rejestracja",
+        "button": "Zarejestruj się"
+    },
+    "common": {
+        "name": "Imię",
+        "emailAddress": "Adres email",
+        "password": "Hasło",
+        "confirmPassword": "Potwierdź hasło"
+    }
+}

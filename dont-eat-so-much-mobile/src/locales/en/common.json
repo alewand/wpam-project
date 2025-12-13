@@ -1,0 +1,21 @@
+{
+    "welcome": {
+        "title": "Welcome",
+        "subTitle": "to DON'T EAT SO MUCH",
+        "description": "We're glad you're here!\n What brings you here today?"
+    },
+    "login": {
+        "title": "Logging In",
+        "button": "Log In"
+    },
+    "register": {
+        "title": "Registration",
+        "button": "Register"
+    },
+    "common": {
+        "name": "Name",
+        "emailAddress": "Email Address",
+        "password": "Password",
+        "confirmPassword": "Confirm Password"
+    }
+}
