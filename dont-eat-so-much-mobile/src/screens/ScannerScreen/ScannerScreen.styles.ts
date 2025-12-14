@@ -54,7 +54,6 @@ export const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 16,
-    marginBottom: 24,
   },
   textBackground: {
     padding: 10,

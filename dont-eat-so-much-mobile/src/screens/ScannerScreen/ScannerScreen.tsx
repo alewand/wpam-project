@@ -26,10 +26,10 @@ export const ScannerScreen = () => {
     if (!permission) {
         return (
             <SafeAreaView style={styles.permissionContainer}>
-            <Header onGoBack={handleGoBack} />
-            <View style={styles.permissionContent}>
-                <ActivityIndicator size="small" color={MAIN_COLOR} />
-            </View>
+                <Header onGoBack={handleGoBack} />
+                <View style={styles.permissionContent}>
+                    <ActivityIndicator size="small" color={MAIN_COLOR} />
+                </View>
             </SafeAreaView>
         );
     }
@@ -37,21 +37,21 @@ export const ScannerScreen = () => {
     if (!permission.granted) {
         return (
             <SafeAreaView style={styles.permissionContainer}>
-            <Header onGoBack={handleGoBack} />
-            <View style={styles.permissionContent}>
-                <Text style={styles.permissionText}>
-                {t("scanner.permissionsNeeded")}
-                </Text>
+                <Header onGoBack={handleGoBack} />
+                <View style={styles.permissionContent}>
+                    <Text style={styles.permissionText}>
+                    {t("scanner.permissionsNeeded")}
+                    </Text>
 
-                <TouchableOpacity
-                style={styles.permissionButton}
-                onPress={requestPermission}
-                >
-                <Text style={styles.permissionButtonText}>
-                    {t("scanner.givePermission")}
-                </Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                    style={styles.permissionButton}
+                    onPress={requestPermission}
+                    >
+                    <Text style={styles.permissionButtonText}>
+                        {t("scanner.givePermission")}
+                    </Text>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
         );
     }
@@ -64,10 +64,10 @@ export const ScannerScreen = () => {
             enableTorch={isTorchInUse}
             onBarcodeScanned={onBarcodeScanned}
             barcodeScannerSettings={{
-            barcodeTypes: [
-                "ean13",
-                "ean8",
-            ],
+                barcodeTypes: [
+                    "ean13",
+                    "ean8",
+                ],
             }}
         />
         <View style={styles.overlay}>
