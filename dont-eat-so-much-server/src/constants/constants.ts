@@ -18,3 +18,5 @@ export const REQUIRED_NUTRIENTS = [
 ];
 
 export const BARCODE_LENGTH = 13;
+
+export const REFRESH_PRODUCTS_WITH_BARCODE_DAYS = 7;
