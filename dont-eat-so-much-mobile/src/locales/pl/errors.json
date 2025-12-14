@@ -1,7 +1,5 @@
 {
-    "required": "To pole jest wymagane",
-    "invalidEmail": "Proszę wprowadzić poprawny adres email",
-    "passwordMinLength": "Hasło musi mieć co najmniej 6 znaków",
+    "invalidCredentials": "Nieprawidłowe dane logowania. Proszę spróbować ponownie.",
     "validation": {
         "name": {
             "required": "Imię jest wymagane.",

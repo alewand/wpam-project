@@ -12,6 +12,11 @@
         "title": "Registration",
         "button": "Register"
     },
+    "scanner": {
+        "hintText": "Point the camera at a barcode to scan it.",
+        "permissionsNeeded": "To use the barcode scanner, we need access to your device's camera.",
+        "givePermission": "Give Permission"
+    },
     "common": {
         "name": "Name",
         "emailAddress": "Email Address",

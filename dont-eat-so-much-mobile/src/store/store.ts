@@ -3,17 +3,22 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistStore } from "redux-persist";
 
 import authReducer from "./auth/slice"
+import dateReducer from "./date/slice"
+import { authApi } from "./auth/api";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        [authApi.reducerPath]: authApi.reducer,
+        date: dateReducer,
+        
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
             },
-        }),
+        }).concat(authApi.middleware),
 });
 
 export const persistor = persistStore(store);

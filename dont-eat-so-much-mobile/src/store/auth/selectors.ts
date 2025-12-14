@@ -10,6 +10,6 @@ const selectAuthState = createSelector(
 export const selectIsAuthenticated = createSelector(
     selectAuthState,
     (auth) => {
-        return auth.userId && auth.accessToken && auth.refreshToken;
+        return !!auth.userId && !!auth.accessToken && !!auth.refreshToken;
     }
 );

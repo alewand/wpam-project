@@ -13,7 +13,8 @@ interface ExtraOptions {
     isPrivate?: boolean;
 }
 
-const API_BASE_URL = 'http://127.0.0.1:3000/api';
+// const API_BASE_URL = 'http://127.0.0.1:3000/api';
+const API_BASE_URL = 'http://192.168.1.100:3000/api';
 
 const basePublicApiQuery = fetchBaseQuery({
     baseUrl: API_BASE_URL,

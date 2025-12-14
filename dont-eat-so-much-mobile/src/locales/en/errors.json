@@ -1,7 +1,5 @@
 {
-    "required": "This field is required",
-    "invalidEmail": "Please enter a valid email address",
-    "passwordMinLength": "Password must be at least 6 characters long",
+    "invalidCredentials": "Invalid login credentials. Please try again.",
     "validation": {
         "name": {
             "required": "Name is required.",

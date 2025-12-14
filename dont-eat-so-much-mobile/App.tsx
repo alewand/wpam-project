@@ -14,14 +14,14 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SnackbarProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <Navigation />
+          <SnackbarProvider>
+            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+            <Navigation />
+          </SnackbarProvider>
         </PersistGate>
       </Provider>
-      </SnackbarProvider>
     </SafeAreaProvider>
   );
 }

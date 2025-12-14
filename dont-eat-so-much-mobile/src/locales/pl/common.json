@@ -12,6 +12,11 @@
         "title": "Rejestracja",
         "button": "Zarejestruj się"
     },
+    "scanner": {
+        "hintText": "Nakieruj kamerę na kod kreskowy, aby go zeskanować.",
+        "permissionsNeeded": "Aby korzystać ze skanera kodów kreskowych, potrzebujemy dostępu do kamery urządzenia.",
+        "givePermission": "Udziel dostępu"
+    },
     "common": {
         "name": "Imię",
         "emailAddress": "Adres email",

@@ -20,5 +20,5 @@ export const useLogin = () => {
         }, [loginMutation]
     );
 
-    return { login, isLoading, isSuccess, isError, error: errorMessage, user: data}
+    return { login, isLoading, isSuccess, isError, error: errorMessage, user: data, errorRaw: error };
 }
