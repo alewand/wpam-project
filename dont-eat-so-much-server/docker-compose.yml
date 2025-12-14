@@ -21,7 +21,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: dont-eat-so-much-server
-    restart: always
     depends_on:
       database:
         condition: service_healthy

@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { GuardsModule } from './guards/guards.module';
 import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
+import { MealsModule } from './meals/meals.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { HttpModule } from '@nestjs/axios';
     TokensModule,
     AuthModule,
     GuardsModule,
+    MealsModule,
   ],
 })
 export class AppModule {}
