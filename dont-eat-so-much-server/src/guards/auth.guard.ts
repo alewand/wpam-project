@@ -3,12 +3,12 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Request } from 'express';
-import { ErrorType } from 'src/errors/types';
-import { AccessTokenService } from 'src/tokens/services/accessToken.service';
+} from "@nestjs/common";
+import { Request } from "express";
+import { ErrorType } from "src/errors/types";
+import { AccessTokenService } from "src/tokens/services/accessToken.service";
 
-export const USER_KEY = 'user';
+export const USER_KEY = "user";
 
 export interface AuthUserPayload {
   userId: string;
@@ -31,8 +31,8 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+  private extractTokenFromHeader(request: Request): string | null {
+    const [type, token] = request.headers.authorization?.split(" ") ?? [];
+    return type === "Bearer" ? token : null;
   }
 }

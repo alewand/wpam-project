@@ -1,17 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { type DrizzleDatabase } from 'src/drizzle/types';
-import * as schema from 'src/drizzle/schema';
-import { eq } from 'drizzle-orm';
+import { Inject, Injectable } from "@nestjs/common";
+import { DRIZZLE } from "src/drizzle/drizzle.module";
+import { type DrizzleDatabase } from "src/drizzle/types";
+import * as schema from "src/drizzle/schema";
+import { eq } from "drizzle-orm";
 import {
   NewUser,
   User,
   userReturn,
   userWithPasswordReturn,
   UserWithTokens,
-} from '../types';
-import { AccessTokenService } from 'src/tokens/services/accessToken.service';
-import { RefreshTokenService } from 'src/tokens/services/refreshToken.service';
+} from "../types";
+import { AccessTokenService } from "src/tokens/services/accessToken.service";
+import { RefreshTokenService } from "src/tokens/services/refreshToken.service";
 
 @Injectable()
 export class UserService {
@@ -26,7 +26,7 @@ export class UserService {
       .insert(schema.users)
       .values({
         ...userData,
-        role: 'user',
+        role: "user",
       })
       .returning(userReturn);
 
@@ -44,7 +44,7 @@ export class UserService {
       .update(schema.users)
       .set({
         ...userData,
-        role: 'user',
+        role: "user",
       })
       .where(eq(schema.users.userId, userId))
       .returning(userReturn);

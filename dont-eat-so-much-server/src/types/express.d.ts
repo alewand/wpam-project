@@ -1,4 +1,4 @@
-import { AuthUserPayload } from 'src/guards/auth.guard';
+import { AuthUserPayload } from "src/guards/auth.guard";
 
 declare global {
   namespace Express {

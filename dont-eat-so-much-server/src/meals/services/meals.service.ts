@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { type DrizzleDatabase } from 'src/drizzle/types';
-import { eq, desc, inArray } from 'drizzle-orm';
-import * as schema from 'src/drizzle/schema';
-import { DateTime } from 'luxon';
-import { REFRESH_PRODUCTS_WITH_BARCODE_DAYS } from 'src/constants/constants';
-import { Meal, mealReturn, NewMeal, RawMeal } from './types';
+import { Inject, Injectable } from "@nestjs/common";
+import { DRIZZLE } from "src/drizzle/drizzle.module";
+import { type DrizzleDatabase } from "src/drizzle/types";
+import { eq, desc, inArray } from "drizzle-orm";
+import * as schema from "src/drizzle/schema";
+import { DateTime } from "luxon";
+import { REFRESH_PRODUCTS_WITH_BARCODE_DAYS } from "src/constants/constants";
+import { Meal, mealReturn, NewMeal, RawMeal } from "./types";
 
 @Injectable()
 export class MealsService {
@@ -20,14 +20,24 @@ export class MealsService {
     return meal;
   }
 
-  async replaceMeal(mealId: string, meal: NewMeal): Promise<Meal> {
+  async editMeal(mealId: string, meal: NewMeal): Promise<Meal | null> {
     const [updatedMeal] = await this.db
       .update(schema.meals)
       .set(meal)
       .where(eq(schema.meals.mealId, mealId))
       .returning(mealReturn);
 
-    return updatedMeal;
+    return updatedMeal ?? null;
+  }
+
+  async getMealById(mealId: string): Promise<Meal | null> {
+    const [meal] = await this.db
+      .select(mealReturn)
+      .from(schema.meals)
+      .where(eq(schema.meals.mealId, mealId))
+      .limit(1);
+
+    return meal ?? null;
   }
 
   async getMealsByIds(mealIds: string[]): Promise<Meal[]> {
@@ -47,18 +57,18 @@ export class MealsService {
     return meal ?? null;
   }
 
-  async getLatestByUser(userId: string, page: number): Promise<Meal[]> {
-    const pageSize = 10;
-    const offset = (page - 1) * pageSize;
+  // async getLatestByUser(userId: string, page: number): Promise<Meal[]> {
+  //   const pageSize = 10;
+  //   const offset = (page - 1) * pageSize;
 
-    return this.db
-      .select(mealReturn)
-      .from(schema.meals)
-      .where(eq(schema.meals.addedBy, userId))
-      .orderBy(desc(schema.meals.createdAt))
-      .limit(pageSize)
-      .offset(offset);
-  }
+  //   return this.db
+  //     .select(mealReturn)
+  //     .from(schema.meals)
+  //     .where(eq(schema.meals.addedBy, userId))
+  //     .orderBy(desc(schema.meals.createdAt))
+  //     .limit(pageSize)
+  //     .offset(offset);
+  // }
 
   shouldMealBeRefreshed(
     meal: RawMeal,
@@ -66,7 +76,8 @@ export class MealsService {
   ) {
     const now = DateTime.now();
     const createdAt = DateTime.fromJSDate(meal.createdAt);
-    const diffInDays = now.diff(createdAt, 'days').days;
+    const diffInDays = now.diff(createdAt, "days").days;
+
     return diffInDays >= refreshDays;
   }
 

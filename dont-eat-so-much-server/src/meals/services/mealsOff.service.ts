@@ -1,12 +1,12 @@
-import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { HttpService } from "@nestjs/axios";
+import { Injectable } from "@nestjs/common";
 import {
   OFF_API,
   OFF_API_FIELDS_STRING,
   REQUIRED_NUTRIENTS,
-} from 'src/constants/constants';
-import { firstValueFrom } from 'rxjs';
-import { MealOFF, MealOFFResponse, NewMeal } from './types';
+} from "src/constants/constants";
+import { firstValueFrom } from "rxjs";
+import { MealOFF, MealOFFResponse, NewMeal } from "./types";
 
 @Injectable()
 export class MealsOFFService {
@@ -44,12 +44,12 @@ export class MealsOFFService {
       barcode: mealFromApi.code,
       name: mealFromApi.product_name,
       brand: this.getBrandName(brands),
-      energyKcalPer100g: nutriments['energy-kcal_100g'] ?? 0,
+      energyKcalPer100g: nutriments["energy-kcal_100g"] ?? 0,
       proteinPer100g: nutriments.proteins_100g ?? 0,
       fatPer100g: nutriments.fat_100g ?? 0,
       carbohydratesPer100g: nutriments.carbohydrates_100g ?? 0,
 
-      saturatedFatPer100g: nutriments['saturated-fat_100g'] ?? null,
+      saturatedFatPer100g: nutriments["saturated-fat_100g"] ?? null,
       sugarsPer100g: nutriments.sugars_100g ?? null,
       fiberPer100g: nutriments.fiber_100g ?? null,
       saltPer100g: nutriments.salt_100g ?? null,
@@ -70,7 +70,7 @@ export class MealsOFFService {
   private getBrandName(brands?: string | string[]): string | null {
     if (!brands) return null;
     if (Array.isArray(brands)) return brands[0] ?? null;
-    return brands.split(',')[0].trim();
+    return brands.split(",")[0].trim();
   }
 
   private getMealRequestUrl(barcode: string): string {

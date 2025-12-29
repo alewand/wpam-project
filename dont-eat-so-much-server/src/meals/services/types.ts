@@ -1,8 +1,8 @@
-import { meals } from 'src/drizzle/schema';
+import { meals } from "src/drizzle/schema";
 
 export type RawMeal = typeof meals.$inferSelect;
 export type NewMeal = typeof meals.$inferInsert;
-export type Meal = Omit<RawMeal, 'addedBy' | 'createdAt' | 'updatedAt'>;
+export type Meal = Omit<RawMeal, "addedBy" | "createdAt" | "updatedAt">;
 
 export interface MealOFF {
   code: string;
@@ -11,14 +11,14 @@ export interface MealOFF {
   nutriments?: {
     calcium_100g?: number;
     carbohydrates_100g?: number;
-    ['energy-kcal_100g']?: number;
+    ["energy-kcal_100g"]?: number;
     fat_100g?: number;
     fiber_100g?: number;
     proteins_100g?: number;
     salt_100g?: number;
     sodium_100g?: number;
     sugars_100g?: number;
-    ['saturated-fat_100g']?: number;
+    ["saturated-fat_100g"]?: number;
   };
 }
 

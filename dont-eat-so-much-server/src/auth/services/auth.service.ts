@@ -2,16 +2,16 @@ import {
   ConflictException,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { UserService } from 'src/user/services/user.service';
-import { RegisterDto } from '../controllers/dto/register.dto';
-import { AccessTokenService } from 'src/tokens/services/accessToken.service';
-import { UserWithTokens } from 'src/user/types';
-import { LoginDto } from '../controllers/dto/login.dto';
-import { ErrorType } from 'src/errors/types';
-import { PasswordService } from 'src/user/services/password.service';
-import { DateTime } from 'luxon';
-import { RefreshTokenService } from 'src/tokens/services/refreshToken.service';
+} from "@nestjs/common";
+import { UserService } from "src/user/services/user.service";
+import { RegisterDto } from "../controllers/dto/register.dto";
+import { AccessTokenService } from "src/tokens/services/accessToken.service";
+import { UserWithTokens } from "src/user/types";
+import { LoginDto } from "../controllers/dto/login.dto";
+import { ErrorType } from "src/errors/types";
+import { PasswordService } from "src/user/services/password.service";
+import { DateTime } from "luxon";
+import { RefreshTokenService } from "src/tokens/services/refreshToken.service";
 
 @Injectable()
 export class AuthService {
