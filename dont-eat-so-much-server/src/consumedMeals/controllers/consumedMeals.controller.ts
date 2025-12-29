@@ -21,7 +21,7 @@ import { ParseIsoDatePipe } from "src/pipes/isoDatePipe";
 
 @Controller("consumed-meals")
 export class ConsumedMealsController {
-  constructor(private consumedMealsService: ConsumedMealsService) {};
+  constructor(private consumedMealsService: ConsumedMealsService) {}
 
   @Version("1")
   @Get(":date")
@@ -35,7 +35,7 @@ export class ConsumedMealsController {
       user.userId,
       date,
     );
-  };
+  }
 
   @Version("1")
   @Post()
@@ -49,7 +49,7 @@ export class ConsumedMealsController {
       createConsumedMealDto,
       user.userId,
     );
-  };
+  }
 
   @Version("1")
   @Put(":consumedMealId")
@@ -65,7 +65,7 @@ export class ConsumedMealsController {
       editConsumedMealDto,
       user.userId,
     );
-  };
+  }
 
   @Version("1")
   @Delete(":consumedMealId")
@@ -75,6 +75,9 @@ export class ConsumedMealsController {
     @CurrentUser() user: AuthUserPayload,
     @Param("consumedMealId", new ParseUUIDPipe()) consumedMealId: string,
   ) {
-    await this.consumedMealsService.deleteConsumedMeal(consumedMealId, user.userId);
-  };
-};
+    await this.consumedMealsService.deleteConsumedMeal(
+      consumedMealId,
+      user.userId,
+    );
+  }
+}
