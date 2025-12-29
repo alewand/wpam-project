@@ -15,14 +15,15 @@ import {
   ConsumedMealWithMeal,
   NewConsumedMeal,
 } from "./types";
-import { DateTime } from "node_modules/@types/luxon/src/luxon";
+import { DateTime } from "luxon";
 import { and, desc, eq } from "drizzle-orm";
 import { EditConsumedMealDto } from "../controllers/dto/editConsumedMeal.dto";
+import { DRIZZLE } from "src/drizzle/drizzle.module";
 
 @Injectable()
 export class ConsumedMealsService {
   constructor(
-    @Inject() private db: DrizzleDatabase,
+    @Inject(DRIZZLE) private db: DrizzleDatabase,
     private mealsService: MealsService,
   ) {}
 
