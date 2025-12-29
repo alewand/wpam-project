@@ -58,7 +58,7 @@ export class MealsApiService {
     }
 
     return this.mealsService.createMeal(mappedMeal);
-  };
+  }
 
   // async createMeal(meal: NewMeal, userId: string): Promise<Meal> {
   //   return this.mealsService.createMeal({ ...meal, addedBy: userId });
