@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, useWindowDimensions } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { useState, useCallback } from "react";
 import { styles, getMacroLetterStyle, getTintColor } from "./NutritionProgressBar.styles";
@@ -9,11 +9,10 @@ import { NutritionModal } from "./components/NutritionModal";
 
 export const NutritionProgressBar = () => {
   const progress = useNutritionProgress();
-  const { width } = useWindowDimensions();
   const { t } = useTranslation("common", { keyPrefix: "meal" });
   const [isNutritionModalVisible, setIsNutritionModalVisible] = useState(false);
 
-  const circleSize = width < 400 ? 50 : 60;
+  const circleSize = 50;
   const strokeWidth = 4;
 
   const formatNumber = useCallback((value: number): string => {
