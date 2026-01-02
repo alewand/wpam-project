@@ -34,6 +34,27 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 14,
     alignItems: "center",
+    gap: 12,
+  },
+  mealImage: {
+    width: 120,
+    height: 150,
+    borderRadius: 12,
+    resizeMode: "cover",
+  },
+  mealImagePlaceholder: {
+    width: 120,
+    height: 150,
+    borderRadius: 12,
+    backgroundColor: SECONDARY_COLOR,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mealImagePlaceholderIcon: {
+    width: 60,
+    height: 60,
+    resizeMode: "contain",
+    opacity: 0.5,
   },
   mealName: {
     color: TEXT_COLOR,

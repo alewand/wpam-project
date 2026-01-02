@@ -1,15 +1,15 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useSnackbar } from "../../../components/Snackbar/Snackbar";
-import { selectSelectedDay } from "../../date/selectors";
-import { useAppSelector } from "../../store";
-import { useAddConsumedMealMutation, useEditConsumedMealMutation } from "../api";
+import { useEditConsumedMealMutation } from "../api";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigation } from "../../../navigation/Navigation";
+import { useAppSelector } from "../../store";
+import { selectSelectedDay } from "../../date/selectors";
 
-export const useAddConsumedMeal = () => {
+export const useEditConsumedMeal = () => {
   const navigation = useNavigation<AppNavigation>();
-  const [editConsumedMealMutation, { isLoading, error }] = useEditConsumedMealMutation();
+  const [editConsumedMealMutation, { isLoading }] = useEditConsumedMealMutation();
 
   const selectedDay = useAppSelector(selectSelectedDay);
 
@@ -17,27 +17,35 @@ export const useAddConsumedMeal = () => {
   const { t: tMeal } = useTranslation("common", { keyPrefix: "consumedMeal" });
   const { publish } = useSnackbar();
 
-  useEffect(() => {
-    if (error) {
-      publish(t("unknownError"));
-      navigateToMeal();
-    }
-  }, [error, publish, t]);
-
   const navigateToMeal = useCallback(() => {
-    navigation.navigate("BottomTabs", { screen: "Meal" });
+    navigation.navigate("BottomTabs", { screen: "Meal", params: { resetDate: false } });
   }, [navigation]);
 
-  const editConsumedMeal = async (mealId: string, amountInGrams: number) => {
-    const consumedAt = selectedDay.toISODate() ?? "";
-    await editConsumedMealMutation({ mealId, consumedAt, amountInGrams }).unwrap();
-    publish(tMeal("editMealSuccess"));
-    navigateToMeal();
-  };
+  const editConsumedMeal = useCallback(
+    async (consumedMealId: string, mealId: string, amountInGrams: number) => {
+      const consumedAt = selectedDay.toISODate() ?? "";
+
+      const consumedMealToEdit = {
+        consumedMealId,
+        mealId,
+        consumedAt,
+        amountInGrams,
+      };
+
+      try {
+        await editConsumedMealMutation(consumedMealToEdit).unwrap();
+        publish(tMeal("editMealSuccess"));
+      } catch {
+        publish(t("unknownError"));
+      } finally {
+        navigateToMeal();
+      }
+    },
+    [editConsumedMealMutation, selectedDay, publish, tMeal, t, navigateToMeal]
+  );
 
   return {
-    addConsumedMeal,
+    editConsumedMeal,
     isLoading,
-    error,
   };
 };

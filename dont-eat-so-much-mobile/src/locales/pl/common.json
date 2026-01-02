@@ -17,10 +17,18 @@
     "permissionsNeeded": "Aby korzystać ze skanera kodów kreskowych, potrzebujemy dostępu do kamery urządzenia.",
     "givePermission": "Udziel dostępu",
     "loading": "Poszukiwanie produktu...",
+    "manualInputButton": "Wpisz kod ręcznie",
     "mealNotFound": {
       "title": "Nie znaleziono produktu",
       "description": "Nie udało się znaleźć produktu dla zeskanowanego kodu kreskowego. Spróbuj ponownie lub dodaj produkt ręcznie.",
       "barcodeLabel": "Zeskanowany kod:"
+    },
+    "manualInput": {
+      "title": "Wpisz kod kreskowy",
+      "description": "Wprowadź kod kreskowy produktu",
+      "placeholder": "Wpisz kod kreskowy",
+      "cancel": "Anuluj",
+      "confirm": "Potwierdź"
     }
   },
   "consumedMeal": {
@@ -41,12 +49,20 @@
     "addButton": "Dodaj",
     "saveButton": "Zapisz",
     "addMealSuccess": "Posiłek został pomyślnie dodany.",
-    "editMealSuccess": "Posiłek został pomyślnie zaktualizowany."
+    "editMealSuccess": "Posiłek został pomyślnie zaktualizowany.",
+    "deleteMealSuccess": "Posiłek został pomyślnie usunięty."
   },
   "common": {
     "name": "Imię",
     "emailAddress": "Adres email",
     "password": "Hasło",
     "confirmPassword": "Potwierdź hasło"
+  },
+  "meal": {
+    "proteinShort": "B.",
+    "carbsShort": "W.",
+    "fatShort": "Tł.",
+    "noMealsTitle": "Brak posiłków",
+    "noMealsDescription": "Nie masz jeszcze żadnych posiłków w tym dniu. Dodaj pierwszy posiłek!"
   }
 }

@@ -5,6 +5,7 @@ import {
   SECOND_TEXT_COLOR,
   WHITE,
   BLACK,
+  MAIN_COLOR,
 } from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
@@ -26,7 +27,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 8 },
-    alignItems: "center",
   },
   title: {
     fontSize: 18,
@@ -42,20 +42,52 @@ export const styles = StyleSheet.create({
     color: TEXT_COLOR,
     textAlign: "center",
   },
-  barcodeRow: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+  input: {
+    borderWidth: 1,
+    borderColor: SECONDARY_COLOR,
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    color: TEXT_COLOR,
+    backgroundColor: WHITE,
+    marginBottom: 20,
+  },
+  buttonsRow: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  cancelButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
     borderRadius: 12,
     backgroundColor: SECONDARY_COLOR,
-    marginBottom: 18,
-    width: "100%",
+    alignItems: "center",
   },
-  barcodeText: {
-    fontSize: 13,
-    fontWeight: "700",
+  cancelButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
     color: TEXT_COLOR,
-    textAlign: "center",
+  },
+  confirmButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    backgroundColor: MAIN_COLOR,
+    alignItems: "center",
+  },
+  confirmButtonDisabled: {
+    backgroundColor: SECONDARY_COLOR,
+    opacity: 0.5,
+  },
+  confirmButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: WHITE,
+  },
+  confirmButtonTextDisabled: {
+    color: SECOND_TEXT_COLOR,
   },
 });

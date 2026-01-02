@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { setTranslatedError } from "../../helpers";
 import { useLogoutMutation } from "../api";
@@ -12,10 +12,10 @@ export const useLogout = () => {
     setTranslatedError(isError, t, setErrorMessage, error);
   }, [isError, error, t]);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setErrorMessage("");
     return logoutMutation();
-  };
+  }, [logoutMutation]);
 
   return { logout, isLoading, isError, isSuccess, error: errorMessage };
 };

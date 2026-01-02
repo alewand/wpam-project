@@ -2,6 +2,7 @@
   "unknownError": "Wystąpił nieznany błąd. Proszę spróbować ponownie później.",
   "invalidCredentials": "Nieprawidłowe dane logowania. Proszę spróbować ponownie.",
   "mealNotFound": "Posiłek o podanym kodzie kreskowym nie został znaleziony.",
+  "networkError": "Wystąpił błąd połączenia. Sprawdź połączenie internetowe i spróbuj ponownie.",
   "validation": {
     "name": {
       "required": "Imię jest wymagane.",

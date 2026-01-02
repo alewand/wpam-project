@@ -48,12 +48,13 @@ export class MealsOFFService {
       proteinPer100g: nutriments.proteins_100g ?? 0,
       fatPer100g: nutriments.fat_100g ?? 0,
       carbohydratesPer100g: nutriments.carbohydrates_100g ?? 0,
-
       saturatedFatPer100g: nutriments["saturated-fat_100g"] ?? null,
       sugarsPer100g: nutriments.sugars_100g ?? null,
       fiberPer100g: nutriments.fiber_100g ?? null,
       saltPer100g: nutriments.salt_100g ?? null,
       sodiumPer100g: nutriments.sodium_100g ?? null,
+      imageUrl:
+        mealFromApi.image_small_url ?? mealFromApi.image_front_url ?? null,
     };
   }
 

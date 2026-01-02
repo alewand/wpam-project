@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useSnackbar } from "../../../components/Snackbar/Snackbar";
 import { selectSelectedDay } from "../../date/selectors";
 import { useAppSelector } from "../../store";
@@ -9,7 +9,7 @@ import { AppNavigation } from "../../../navigation/Navigation";
 
 export const useAddConsumedMeal = () => {
   const navigation = useNavigation<AppNavigation>();
-  const [addConsumedMealMutation, { isLoading, error }] = useAddConsumedMealMutation();
+  const [addConsumedMealMutation, { isLoading }] = useAddConsumedMealMutation();
 
   const selectedDay = useAppSelector(selectSelectedDay);
 
@@ -17,27 +17,27 @@ export const useAddConsumedMeal = () => {
   const { t: tMeal } = useTranslation("common", { keyPrefix: "consumedMeal" });
   const { publish } = useSnackbar();
 
-  useEffect(() => {
-    if (error) {
-      publish(t("unknownError"));
-      navigateToMeal();
-    }
-  }, [error, publish, t]);
-
   const navigateToMeal = useCallback(() => {
-    navigation.navigate("BottomTabs", { screen: "Meal" });
+    navigation.navigate("BottomTabs", { screen: "Meal", params: { resetDate: false } });
   }, [navigation]);
 
-  const addConsumedMeal = async (mealId: string, amountInGrams: number) => {
-    const consumedAt = selectedDay.toISODate() ?? "";
-    await addConsumedMealMutation({ mealId, consumedAt, amountInGrams }).unwrap();
-    publish(tMeal("addMealSuccess"));
-    navigateToMeal();
-  };
+  const addConsumedMeal = useCallback(
+    async (mealId: string, amountInGrams: number) => {
+      const consumedAt = selectedDay.toISODate() ?? "";
+      try {
+        await addConsumedMealMutation({ mealId, consumedAt, amountInGrams }).unwrap();
+        publish(tMeal("addMealSuccess"));
+      } catch {
+        publish(t("unknownError"));
+      } finally {
+        navigateToMeal();
+      }
+    },
+    [addConsumedMealMutation, selectedDay, publish, tMeal, t, navigateToMeal]
+  );
 
   return {
     addConsumedMeal,
     isLoading,
-    error,
   };
 };

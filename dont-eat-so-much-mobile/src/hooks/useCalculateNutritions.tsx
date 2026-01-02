@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { Meal, Nutritions } from "../../../store/meal/types";
+import { Meal, Nutritions } from "../store/meal/types";
 
 export interface UseCalculateNutritionsProps {
   grams: number;

@@ -3,12 +3,16 @@ import { Text } from "react-native-gesture-handler";
 import { styles } from "./DateBar.styles";
 import { useDateBar } from "./hooks/useDateBar";
 
-const goLeftIcon = require("../../../../assets/icons/goLeft.png");
-const goRightIcon = require("../../../../assets/icons/goRight.png");
-const goBackIcon = require("../../../../assets/icons/goBackToSelectedDay.png");
-const goBackDisabledIcon = require("../../../../assets/icons/goBackToSelectedDayDisabled.png");
+export interface DateBarProps {
+  resetDate?: boolean;
+}
 
-export const DateBar = () => {
+const goLeftIcon = require("../../assets/icons/goLeft.png");
+const goRightIcon = require("../../assets/icons/goRight.png");
+const goBackIcon = require("../../assets/icons/goBackToSelectedDay.png");
+const goBackDisabledIcon = require("../../assets/icons/goBackToSelectedDayDisabled.png");
+
+export const DateBar = ({ resetDate }: DateBarProps) => {
   const {
     selectedDay,
     selectedWeek,
@@ -21,7 +25,7 @@ export const DateBar = () => {
     handleDayPress,
     handleGoBackToSelectedDay,
     isGoBackDisabled,
-  } = useDateBar();
+  } = useDateBar({ resetDate });
 
   return (
     <View style={styles.container}>

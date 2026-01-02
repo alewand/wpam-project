@@ -1,41 +1,56 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { RootStackParamList } from "../../../navigation/Navigation";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { AppNavigation, RootStackParamList } from "../../../navigation/Navigation";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_GRAMS } from "../../../constants/constants";
 import { upperCaseFirstLetter } from "../../../utils/helpers";
-import { useCalculateNutritions } from "./useCalculateNutritions";
+import { useCalculateNutritions } from "../../../hooks/useCalculateNutritions";
 import { useAddConsumedMeal } from "../../../store/meal/api/useAddConsumedMeal";
+import { useEditConsumedMeal } from "../../../store/meal/api/useEditConsumedMeal";
 
 export const useConsumedMealScreen = () => {
+  const navigation = useNavigation<AppNavigation>();
   const route = useRoute<RouteProp<RootStackParamList, "ConsumedMeal">>();
   const { t } = useTranslation("common", { keyPrefix: "consumedMeal" });
 
   const meal = route.params.meal;
   const action = route.params.action;
+  const consumedMealId = route.params.consumedMealId;
+  const amountInGrams = route.params.amountInGrams;
 
-  const [grams, setGrams] = useState<number>(DEFAULT_GRAMS);
+  const [grams, setGrams] = useState<number>(amountInGrams ?? DEFAULT_GRAMS);
 
   const { nutritions } = useCalculateNutritions({ grams, meal });
-  const { addConsumedMeal, isLoading } = useAddConsumedMeal();
+  const { addConsumedMeal, isLoading: isAddLoading } = useAddConsumedMeal();
+  const { editConsumedMeal, isLoading: isEditLoading } = useEditConsumedMeal();
 
   const addConsumedMealAction = useCallback(
     async () => addConsumedMeal(meal.mealId, grams),
     [addConsumedMeal, meal.mealId, grams]
   );
 
+  const editConsumedMealAction = useCallback(async () => {
+    if (!consumedMealId || !amountInGrams) return;
+    await editConsumedMeal(consumedMealId, meal.mealId, grams);
+  }, [editConsumedMeal, consumedMealId, meal.mealId, grams]);
+
   const headerTitle = action === "add" ? t("addMealTitle") : t("editMealTitle");
   const confirmButtonName = action === "add" ? t("addButton") : t("saveButton");
   const isConfirmButtonDisabled = grams <= 0;
 
-  const actionMutation = action === "add" ? addConsumedMealAction : () => Promise.resolve();
-  const isActionLoading = action === "add" ? isLoading : false;
+  const actionMutation = action === "add" ? addConsumedMealAction : editConsumedMealAction;
+  const isActionLoading = action === "add" ? isAddLoading : isEditLoading;
+
+  const goBack = useCallback(() => {
+    navigation.navigate("BottomTabs", { screen: "Meal", params: { resetDate: false } });
+  }, [navigation]);
 
   return {
     grams,
     setGrams,
     mealName: upperCaseFirstLetter(meal.name),
     mealBrand: upperCaseFirstLetter(meal.brand),
+    mealImageUrl: meal.imageUrl,
     nutritions,
     headerTitle,
     confirmButtonName,
@@ -43,5 +58,6 @@ export const useConsumedMealScreen = () => {
     action: actionMutation,
     actionType: action,
     isLoading: isActionLoading,
+    goBack,
   };
 };

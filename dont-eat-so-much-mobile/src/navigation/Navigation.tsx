@@ -12,11 +12,13 @@ import { MealScreen } from "../screens/MealScreen/MealScreen";
 import { useAppSelector } from "../store/store";
 import { selectIsAuthenticated } from "../store/auth/selectors";
 import { ScannerScreen } from "../screens/ScannerScreen/ScannerScreen";
-import { Meal } from "../store/meal/types";
 import { ConsumedMealScreen } from "../screens/ConsumedMealScreen/ConsumedMealScreen";
+import { Meal } from "../store/meal/types";
 
 export type BottomTabParamList = {
-  Meal: undefined;
+  Meal: {
+    resetDate?: boolean;
+  };
 };
 
 export type RootStackParamList = {
@@ -25,7 +27,12 @@ export type RootStackParamList = {
   Login: undefined;
   Scanner: undefined;
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
-  ConsumedMeal: { meal: Meal; action: "add" | "edit" | "view" };
+  ConsumedMeal: {
+    meal: Meal;
+    action: "add" | "edit" | "view";
+    consumedMealId?: string;
+    amountInGrams?: number;
+  };
 };
 
 export type AppNavigation = NativeStackNavigationProp<RootStackParamList>;

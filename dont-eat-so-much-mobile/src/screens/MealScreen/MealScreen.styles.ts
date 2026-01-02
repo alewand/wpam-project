@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { MAIN_COLOR } from "../../constants/colors";
+import { MAIN_COLOR, SECOND_TEXT_COLOR, TEXT_COLOR } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
   button: {
@@ -23,5 +23,36 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 20,
     paddingVertical: 8,
+  },
+  loadingContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    minHeight: 500,
+  },
+  emptyContainer: {
+    alignItems: "center",
+    marginTop: 60,
+    paddingHorizontal: 32,
+  },
+  emptyPlaceholderIcon: {
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
+    opacity: 0.5,
+    marginBottom: 24,
+  },
+  emptyTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: TEXT_COLOR,
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  emptyDescription: {
+    fontSize: 14,
+    color: SECOND_TEXT_COLOR,
+    textAlign: "center",
+    lineHeight: 20,
   },
 });

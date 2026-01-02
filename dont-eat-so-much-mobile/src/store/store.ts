@@ -19,7 +19,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
-    }).concat(authApi.middleware),
+    }).concat(authApi.middleware, mealApi.middleware),
 });
 
 export const persistor = persistStore(store);

@@ -12,12 +12,13 @@ export interface Meal {
   fiberPer100g?: number;
   saltPer100g?: number;
   sodiumPer100g?: number;
+  imageUrl?: string;
 }
 
 export interface ConsumedMeal {
   consumedMealId: string;
   mealId: string;
-  date: string;
+  consumedAt: string;
   amountInGrams: number;
   meal: Meal;
 }

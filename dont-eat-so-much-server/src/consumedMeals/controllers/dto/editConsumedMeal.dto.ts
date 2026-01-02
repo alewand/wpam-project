@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { IsDateString, IsNumber, IsUUID, Max, Min } from "class-validator";
 
 export class EditConsumedMealDto {
@@ -7,6 +8,7 @@ export class EditConsumedMealDto {
   @IsNumber()
   @Min(1)
   @Max(10000)
+  @Transform(({ value }: { value: string }) => parseFloat(value))
   amountInGrams: number;
 
   @IsDateString()

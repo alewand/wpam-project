@@ -16,7 +16,20 @@
     "hintText": "Point the camera at a barcode to scan it.",
     "permissionsNeeded": "To use the barcode scanner, we need access to your device's camera.",
     "givePermission": "Give Permission",
-    "loading": "Searching for meal..."
+    "loading": "Searching for meal...",
+    "manualInputButton": "Enter code manually",
+    "mealNotFound": {
+      "title": "Product not found",
+      "description": "Could not find a product for the scanned barcode. Try again or add the product manually.",
+      "barcodeLabel": "Scanned code:"
+    },
+    "manualInput": {
+      "title": "Enter barcode",
+      "description": "Enter the product barcode",
+      "placeholder": "Enter barcode",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
   },
   "consumedMeal": {
     "amountInGrams": "Amount in grams:",
@@ -36,12 +49,20 @@
     "addButton": "Add",
     "saveButton": "Save",
     "addMealSuccess": "Meal added successfully.",
-    "editMealSuccess": "Meal updated successfully."
+    "editMealSuccess": "Meal updated successfully.",
+    "deleteMealSuccess": "Meal deleted successfully."
   },
   "common": {
     "name": "Name",
     "emailAddress": "Email Address",
     "password": "Password",
     "confirmPassword": "Confirm Password"
+  },
+  "meal": {
+    "proteinShort": "P.",
+    "carbsShort": "C.",
+    "fatShort": "F.",
+    "noMealsTitle": "No meals",
+    "noMealsDescription": "You don't have any meals logged for this day yet. Add your first meal!"
   }
 }

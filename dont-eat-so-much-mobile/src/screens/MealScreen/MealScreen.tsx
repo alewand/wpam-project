@@ -1,30 +1,37 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
-import { DateBar } from "./components/DateBar/DateBar";
 import { styles } from "./MealScreen.styles";
-import { useNavigation } from "@react-navigation/native";
-import { AppNavigation } from "../../navigation/Navigation";
+import { DateBar } from "../../components/DateBar/DateBar";
+import { FlashList } from "@shopify/flash-list";
+import { useMealScreen } from "./hooks/useMealScreen";
+import { ActivityIndicator } from "react-native-paper";
 import { useCallback } from "react";
-import { useAppDispatch } from "../../store/store";
-import { clearUserCredentials } from "../../store/auth/slice";
+import { MAIN_COLOR } from "../../constants/colors";
+import { MealCard } from "../../components/MealCard/MealCard";
+import { ConsumedMeal } from "../../store/meal/types";
 
 const addProductIcon = require("../../assets/icons/addProduct.png");
 const barCodeIcon = require("../../assets/icons/barCode.png");
+const placeholderIcon = require("../../assets/icons/placeholder.png");
 
 export const MealScreen = () => {
-  const navigation = useNavigation<AppNavigation>();
+  const { t } = useTranslation("common", { keyPrefix: "meal" });
+  const {
+    onCardDeletePress,
+    onCardLongPress,
+    onCardPress,
+    isLoading,
+    consumedMeals,
+    handleBarcodePress,
+    resetDate,
+  } = useMealScreen();
 
-  const dispatch = useAppDispatch();
-
-  const handleBarcodePress = useCallback(() => {
-    navigation.navigate("Scanner");
-  }, [navigation]);
-
-  return (
-    <SafeAreaView>
-      <DateBar />
-      <ScrollView>
+  const ListHeader = useCallback(
+    () => (
+      <View>
+        <DateBar resetDate={resetDate} />
         <View style={styles.buttonsRow}>
           <TouchableOpacity style={styles.button} onPress={handleBarcodePress}>
             <Image style={styles.buttonIcon} source={barCodeIcon} />
@@ -33,10 +40,50 @@ export const MealScreen = () => {
             <Image style={styles.buttonIcon} source={addProductIcon} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => dispatch(clearUserCredentials())}>
-          <Text>ClearCredentials</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      </View>
+    ),
+    [resetDate, handleBarcodePress, isLoading]
+  );
+
+  const EmptyList = useCallback(() => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={MAIN_COLOR} />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.emptyContainer}>
+        <Image source={placeholderIcon} style={styles.emptyPlaceholderIcon} />
+        <Text style={styles.emptyTitle}>{t("noMealsTitle")}</Text>
+        <Text style={styles.emptyDescription}>{t("noMealsDescription")}</Text>
+      </View>
+    );
+  }, [isLoading, t]);
+
+  const renderItem = useCallback(
+    ({ item }: { item: ConsumedMeal }) => (
+      <MealCard
+        consumedMeal={item}
+        onCardDeletePress={onCardDeletePress}
+        onCardLongPress={() => onCardLongPress(item.meal, item.consumedMealId, item.amountInGrams)}
+        onCardPress={() => onCardPress(item.meal, item.consumedMealId, item.amountInGrams)}
+      />
+    ),
+    [onCardDeletePress, onCardLongPress, onCardPress]
+  );
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlashList
+        data={consumedMeals ?? []}
+        keyExtractor={(item) => item.consumedMealId}
+        renderItem={renderItem}
+        ListHeaderComponent={<ListHeader />}
+        ListEmptyComponent={<EmptyList />}
+      />
     </SafeAreaView>
   );
 };

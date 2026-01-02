@@ -1,19 +1,23 @@
 import { DateTime } from "luxon";
-import { useCallback, useEffect, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../../store/store";
-import { styles } from "../DateBar.styles";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../../../store/store";
 import {
   selectCurrentDay,
   selectSelectedDay,
   selectSelectedMonth,
   selectSelectedWeek,
   selectSelectedYear,
-} from "../../../../../store/date/selectors";
-import { Day } from "../../../../../store/date/types";
-import { setNextWeek, setPreviousWeek, setSelectedDay } from "../../../../../store/date/slice";
-import { getCurrentDay } from "../../../../../store/date/helpers";
+} from "../../../store/date/selectors";
+import { Day } from "../../../store/date/types";
+import { styles } from "../DateBar.styles";
+import { setNextWeek, setPreviousWeek, setSelectedDay } from "../../../store/date/slice";
+import { getCurrentDay } from "../../../store/date/helpers";
 
-export const useDateBar = () => {
+export interface UseDateBarProps {
+  resetDate?: boolean;
+}
+
+export const useDateBar = ({ resetDate }: UseDateBarProps) => {
   const dispatch = useAppDispatch();
 
   const selectedDay = useAppSelector(selectSelectedDay);
@@ -21,6 +25,8 @@ export const useDateBar = () => {
   const selectedWeek: Day[] = useAppSelector(selectSelectedWeek);
   const selectedMonth = useAppSelector(selectSelectedMonth);
   const selectedYear = useAppSelector(selectSelectedYear);
+
+  const shouldDateBeReseted = useRef<boolean>(resetDate ?? false);
 
   const getDayStyle = useCallback(
     (date: DateTime) => {
@@ -70,8 +76,11 @@ export const useDateBar = () => {
   }, [currentDay, selectedWeek]);
 
   useEffect(() => {
-    handleGoBackToSelectedDay();
-  }, [handleGoBackToSelectedDay]);
+    if (shouldDateBeReseted.current) {
+      handleGoBackToSelectedDay();
+      shouldDateBeReseted.current = false;
+    }
+  }, [handleGoBackToSelectedDay, shouldDateBeReseted.current]);
 
   return {
     selectedDay,

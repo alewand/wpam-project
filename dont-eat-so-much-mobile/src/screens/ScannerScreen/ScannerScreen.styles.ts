@@ -60,6 +60,20 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "rgba(0,0,0,0.5)",
   },
+  bottomSection: {
+    gap: 12,
+  },
+  manualInputButton: {
+    padding: 12,
+    borderRadius: 10,
+    backgroundColor: "rgba(245, 158, 11, 0.9)",
+    alignItems: "center",
+  },
+  manualInputButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
   torchIcon: {
     width: 40,
     height: 40,

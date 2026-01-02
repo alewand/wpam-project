@@ -7,6 +7,7 @@ import { styles } from "./ScannerScreen.styles";
 import { MAIN_COLOR } from "../../constants/colors";
 import { Header } from "../../components/Header/Header";
 import { MealNotFoundModal } from "./components/MealNotFoundModal";
+import { ManualBarcodeInputModal } from "./components/ManualBarcodeInputModal";
 
 const torchOnIcon = require("../../assets/icons/torchOn.png");
 const torchOffIcon = require("../../assets/icons/torchOff.png");
@@ -26,6 +27,9 @@ export const ScannerScreen = () => {
     handleCloseMealNotFoundModal,
     isLoading,
     barcode,
+    isManualBarcodeInputModalVisible,
+    setIsManualBarcodeInputModalVisible,
+    handleManualBarcodeInput,
   } = useBarcodeScanner();
 
   if (!permission) {
@@ -83,8 +87,17 @@ export const ScannerScreen = () => {
 
           {!isLoading && !isMealNotFoundModalVisible && <View style={styles.frame} />}
 
-          <View style={styles.textBackground}>
-            <Text style={styles.hint}>{t("scanner.hintText")}</Text>
+          <View style={styles.bottomSection}>
+            <View style={styles.textBackground}>
+              <Text style={styles.hint}>{t("scanner.hintText")}</Text>
+            </View>
+
+            <TouchableOpacity
+              style={styles.manualInputButton}
+              onPress={() => setIsManualBarcodeInputModalVisible(true)}
+            >
+              <Text style={styles.manualInputButtonText}>{t("scanner.manualInputButton")}</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -103,6 +116,12 @@ export const ScannerScreen = () => {
           onClose={handleCloseMealNotFoundModal}
         />
       )}
+
+      <ManualBarcodeInputModal
+        isVisible={isManualBarcodeInputModalVisible}
+        onClose={() => setIsManualBarcodeInputModalVisible(false)}
+        onConfirm={handleManualBarcodeInput}
+      />
     </>
   );
 };

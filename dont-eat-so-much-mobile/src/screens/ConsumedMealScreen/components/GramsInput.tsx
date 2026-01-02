@@ -12,9 +12,10 @@ const DEFAULT = DEFAULT_GRAMS;
 export interface GramsInputProps {
   grams: number;
   setGrams: Dispatch<SetStateAction<number>>;
+  readOnly?: boolean;
 }
 
-export const GramsInput = ({ grams, setGrams }: GramsInputProps) => {
+export const GramsInput = ({ grams, setGrams, readOnly = false }: GramsInputProps) => {
   const { t } = useTranslation("common", { keyPrefix: "consumedMeal" });
 
   const clampGrams = useCallback((value: number) => {
@@ -48,8 +49,11 @@ export const GramsInput = ({ grams, setGrams }: GramsInputProps) => {
       <View style={styles.inputContainer}>
         <TouchableOpacity
           onPress={() => onGramsApply(-STEP)}
-          disabled={isDecreaseDisabled}
-          style={[styles.applyButton, isDecreaseDisabled && styles.applyButtonDisabled]}
+          disabled={isDecreaseDisabled || readOnly}
+          style={[
+            styles.applyButton,
+            (isDecreaseDisabled || readOnly) && styles.applyButtonDisabled,
+          ]}
         >
           <Text style={styles.applyButtonText}>-</Text>
         </TouchableOpacity>
@@ -58,24 +62,30 @@ export const GramsInput = ({ grams, setGrams }: GramsInputProps) => {
           value={`${grams.toString()}`}
           onChangeText={onGramsChange}
           style={styles.input}
+          editable={!readOnly}
         />
         <TouchableOpacity
           onPress={() => onGramsApply(STEP)}
-          disabled={isIncreaseDisabled}
-          style={[styles.applyButton, isIncreaseDisabled && styles.applyButtonDisabled]}
+          disabled={isIncreaseDisabled || readOnly}
+          style={[
+            styles.applyButton,
+            (isIncreaseDisabled || readOnly) && styles.applyButtonDisabled,
+          ]}
         >
           <Text style={styles.applyButtonText}>+</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={resetGrams}
-        disabled={isResetDisabled}
-        style={[styles.resetButton, isResetDisabled && styles.resetButtonDisabled]}
-      >
-        <Text style={[styles.resetText, isResetDisabled && styles.resetTextDisabled]}>
-          {t("reset")}
-        </Text>
-      </TouchableOpacity>
+      {!readOnly && (
+        <TouchableOpacity
+          onPress={resetGrams}
+          disabled={isResetDisabled}
+          style={[styles.resetButton, isResetDisabled && styles.resetButtonDisabled]}
+        >
+          <Text style={[styles.resetText, isResetDisabled && styles.resetTextDisabled]}>
+            {t("reset")}
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

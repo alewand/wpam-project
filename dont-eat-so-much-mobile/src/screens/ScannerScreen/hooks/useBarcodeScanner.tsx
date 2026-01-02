@@ -4,6 +4,9 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } fr
 import { BarcodeScanningResult, PermissionResponse, useCameraPermissions } from "expo-camera";
 import { useGetMealByBarcode } from "../../../store/meal/api/useGetMealByBarcode";
 import { Meal } from "../../../store/meal/types";
+import { useSnackbar } from "../../../components/Snackbar/Snackbar";
+import { useTranslation } from "react-i18next";
+import { isValidBarcodeLength } from "../../../constants/constants";
 
 export interface UseBarcodeScannerReturn {
   onBarcodeScanned: (scanResult: BarcodeScanningResult) => void;
@@ -16,26 +19,50 @@ export interface UseBarcodeScannerReturn {
   isLoading?: boolean;
   isMealNotFoundModalVisible: boolean;
   handleCloseMealNotFoundModal: () => void;
+  isManualBarcodeInputModalVisible: boolean;
+  setIsManualBarcodeInputModalVisible: Dispatch<SetStateAction<boolean>>;
+  handleManualBarcodeInput: (barcode: string) => void;
 }
 
 export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
   const navigation = useNavigation<AppNavigation>();
   const [permission, requestPermission] = useCameraPermissions();
   const { getMealByBarcode, isLoading } = useGetMealByBarcode();
+  const { publish } = useSnackbar();
+  const { t } = useTranslation("errors");
 
   const [isTorchInUse, setIsTorchInUse] = useState<boolean>(false);
   const [isMealNotFoundModalVisible, setIsMealNotFoundModalVisible] = useState<boolean>(false);
-
+  const [isManualBarcodeInputModalVisible, setIsManualBarcodeInputModalVisible] =
+    useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
   const [barcode, setBarcode] = useState<string | null>(null);
-  const scannerRefresher = useRef<number>(0);
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const onBarcodeScanned = useCallback((scanResult: BarcodeScanningResult) => {
-    const scannedBarcode = scanResult.data?.trim();
-    if (!scannedBarcode) return;
+  const onBarcodeScanned = useCallback(
+    (scanResult: BarcodeScanningResult) => {
+      if (isLoading || isProcessing) return;
 
-    setBarcode(scannedBarcode);
-    scannerRefresher.current = (scannerRefresher.current + 1) % 2;
-  }, []);
+      const scannedBarcode = scanResult.data?.trim();
+
+      if (!scannedBarcode || !isValidBarcodeLength(scannedBarcode.length)) {
+        return;
+      }
+
+      if (scannedBarcode === lastScannedBarcode) return;
+
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+
+      debounceTimeout.current = setTimeout(() => {
+        setBarcode(scannedBarcode);
+        setLastScannedBarcode(scannedBarcode);
+      }, 300);
+    },
+    [isLoading, isProcessing, lastScannedBarcode]
+  );
 
   const navigateToConsumedMeal = useCallback(
     (meal: Meal) => {
@@ -69,27 +96,66 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
   );
 
   const handleGoBack = useCallback(() => {
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     navigation.goBack();
   }, [navigation]);
 
-  const handleCloseMealNotFoundModal = useCallback(() => setIsMealNotFoundModalVisible(false), []);
+  const handleCloseMealNotFoundModal = useCallback(() => {
+    setIsMealNotFoundModalVisible(false);
+    setBarcode(null);
+    setLastScannedBarcode(null);
+  }, []);
+
+  const handleManualBarcodeInput = useCallback(
+    (manualBarcode: string) => {
+      if (isLoading || isProcessing) return;
+
+      const trimmedBarcode = manualBarcode.trim();
+      if (!isValidBarcodeLength(trimmedBarcode.length)) {
+        return;
+      }
+
+      if (trimmedBarcode === lastScannedBarcode) return;
+
+      setBarcode(trimmedBarcode);
+      setLastScannedBarcode(trimmedBarcode);
+    },
+    [isLoading, isProcessing, lastScannedBarcode]
+  );
 
   const fetchMealByBarcode = useCallback(
     async (barcode: string) => {
-      const meal = await getMealByBarcode(barcode);
+      setIsProcessing(true);
+      try {
+        const { meal, error } = await getMealByBarcode(barcode);
 
-      if (meal) {
-        navigateToConsumedMeal(meal);
-      } else {
-        setIsMealNotFoundModalVisible(true);
+        if (meal) {
+          navigateToConsumedMeal(meal);
+        } else if (error === "not-found") {
+          setIsMealNotFoundModalVisible(true);
+        } else if (error === "network-error") {
+          publish(t("networkError"));
+        }
+      } finally {
+        setIsProcessing(false);
       }
     },
-    [getMealByBarcode, navigateToConsumedMeal]
+    [getMealByBarcode, navigateToConsumedMeal, publish, t]
   );
 
   useEffect(() => {
-    if (barcode) fetchMealByBarcode(barcode);
-  }, [barcode, fetchMealByBarcode, scannerRefresher.current]);
+    if (barcode) {
+      fetchMealByBarcode(barcode);
+    }
+  }, [barcode, fetchMealByBarcode]);
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, []);
 
   return {
     onBarcodeScanned,
@@ -100,7 +166,10 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
     handleGoBack,
     isMealNotFoundModalVisible,
     handleCloseMealNotFoundModal,
-    isLoading,
+    isLoading: isLoading || isProcessing,
     barcode,
+    isManualBarcodeInputModalVisible,
+    setIsManualBarcodeInputModalVisible,
+    handleManualBarcodeInput,
   };
 };

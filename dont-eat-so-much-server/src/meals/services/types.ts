@@ -20,6 +20,8 @@ export interface MealOFF {
     sugars_100g?: number;
     ["saturated-fat_100g"]?: number;
   };
+  image_small_url?: string;
+  image_front_url?: string;
 }
 
 export interface MealOFFResponse {
@@ -43,4 +45,5 @@ export const mealReturn = {
   fiberPer100g: meals.fiberPer100g,
   saltPer100g: meals.saltPer100g,
   sodiumPer100g: meals.sodiumPer100g,
+  imageUrl: meals.imageUrl,
 };

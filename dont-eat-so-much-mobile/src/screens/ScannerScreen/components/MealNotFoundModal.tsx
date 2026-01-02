@@ -29,9 +29,8 @@ export const MealNotFoundModal = ({
           <Text style={styles.description}>{t("description")}</Text>
 
           <View style={styles.barcodeRow}>
-            <Text style={styles.barcodeLabel}>{t("barcodeLabel")}</Text>
-            <Text style={styles.barcodeValue} numberOfLines={1}>
-              {barcode}
+            <Text style={styles.barcodeText} numberOfLines={1}>
+              {t("barcodeLabel")} {barcode}
             </Text>
           </View>
         </Pressable>

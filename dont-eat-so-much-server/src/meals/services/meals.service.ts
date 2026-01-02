@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DRIZZLE } from "src/drizzle/drizzle.module";
 import { type DrizzleDatabase } from "src/drizzle/types";
-import { eq, desc, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import * as schema from "src/drizzle/schema";
 import { DateTime } from "luxon";
 import { REFRESH_PRODUCTS_WITH_BARCODE_DAYS } from "src/constants/constants";

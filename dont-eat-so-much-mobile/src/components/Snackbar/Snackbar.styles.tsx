@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
-    marginBottom: 60,
+    marginBottom: 70,
     borderRadius: 12,
   },
   message: {

@@ -3,6 +3,7 @@ import { real } from "drizzle-orm/pg-core";
 import { uuid } from "drizzle-orm/pg-core";
 import { pgTable } from "drizzle-orm/pg-core";
 import { users } from "./user.schema";
+import { IMAGE_URL_LIMIT } from "src/constants/constants";
 
 export const meals = pgTable("meals", {
   mealId: uuid("meal_id").primaryKey().defaultRandom(),
@@ -21,6 +22,8 @@ export const meals = pgTable("meals", {
   fiberPer100g: real("fiber_per_100g"),
   saltPer100g: real("salt_per_100g"),
   sodiumPer100g: real("sodium_per_100g"),
+
+  imageUrl: varchar("image_url", { length: IMAGE_URL_LIMIT }),
 
   addedBy: uuid("added_by").references(() => users.userId, {
     onDelete: "set null",
