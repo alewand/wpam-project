@@ -10,14 +10,14 @@ import { getErrorStatus, getErrorType } from "./helpers";
 import { EXPIRED_ACCESS_TOKEN } from "../constants/errors";
 
 interface ExtraOptions {
-    isPrivate?: boolean;
+  isPrivate?: boolean;
 }
 
 // const API_BASE_URL = 'http://127.0.0.1:3000/api';
-const API_BASE_URL = 'http://192.168.1.100:3000/api';
+const API_BASE_URL = "http://192.168.1.17:3000/api/v1";
 
 const basePublicApiQuery = fetchBaseQuery({
-    baseUrl: API_BASE_URL,
+  baseUrl: API_BASE_URL,
 });
 
 const basePrivateApiQuery: BaseQueryFn<
@@ -26,13 +26,13 @@ const basePrivateApiQuery: BaseQueryFn<
   FetchBaseQueryError,
   ExtraOptions
 > = fetchBaseQuery({
-    baseUrl: API_BASE_URL,
-    prepareHeaders: (headers, {getState}) => {
-        const rootState = getState() as RootState;
-        const accessToken = rootState.auth.accessToken;
-        if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
-        return headers;
-    }
+  baseUrl: API_BASE_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const rootState = getState() as RootState;
+    const accessToken = rootState.auth.accessToken;
+    if (accessToken) headers.set("Authorization", `Bearer ${accessToken}`);
+    return headers;
+  },
 });
 
 const basePrivateApiQueryWithRefresh: BaseQueryFn<
@@ -41,33 +41,40 @@ const basePrivateApiQueryWithRefresh: BaseQueryFn<
   FetchBaseQueryError,
   ExtraOptions
 > = async (args, api, extraOptions) => {
-    const queryResult = await basePrivateApiQuery(args, api, extraOptions);
+  const queryResult = await basePrivateApiQuery(args, api, extraOptions);
 
-    if (!(queryResult.error && getErrorStatus(queryResult.error) === 401) && getErrorType(queryResult.error) !== EXPIRED_ACCESS_TOKEN) {
-        return queryResult;
-    }
+  if (
+    !(queryResult.error && getErrorStatus(queryResult.error) === 401) &&
+    getErrorType(queryResult.error) !== EXPIRED_ACCESS_TOKEN
+  ) {
+    return queryResult;
+  }
 
-    const rootState = api.getState() as RootState;
-    const refreshToken = rootState.auth.refreshToken;
+  const rootState = api.getState() as RootState;
+  const refreshToken = rootState.auth.refreshToken;
 
-    if (!refreshToken) return queryResult;
+  if (!refreshToken) return queryResult;
 
-    const refreshResult = await basePublicApiQuery({
-        url: '/auth/refresh',
-        method: 'POST',
-        body: { token: refreshToken }
-    }, api, extraOptions);
+  const refreshResult = await basePublicApiQuery(
+    {
+      url: "/auth/refresh",
+      method: "POST",
+      body: { refreshToken },
+    },
+    api,
+    extraOptions
+  );
 
-    if (refreshResult.error) {
-        api.dispatch(clearUserCredentials());
-        return queryResult;
-    }
+  if (refreshResult.error) {
+    api.dispatch(clearUserCredentials());
+    return queryResult;
+  }
 
-    const { accessToken } = refreshResult.data as { accessToken: string };
+  const { accessToken } = refreshResult.data as { accessToken: string };
 
-    api.dispatch(updateTokens({accessToken}));
+  api.dispatch(updateTokens({ accessToken }));
 
-    return basePrivateApiQuery(args, api, extraOptions);
+  return basePrivateApiQuery(args, api, extraOptions);
 };
 
 export const baseApiQuery: BaseQueryFn<
@@ -75,4 +82,7 @@ export const baseApiQuery: BaseQueryFn<
   unknown,
   FetchBaseQueryError,
   ExtraOptions
-> = (args, api, extraOptions) => extraOptions && extraOptions.isPrivate ? basePrivateApiQueryWithRefresh(args, api, extraOptions) : basePublicApiQuery(args, api, extraOptions);
+> = (args, api, extraOptions) =>
+  extraOptions && extraOptions.isPrivate
+    ? basePrivateApiQueryWithRefresh(args, api, extraOptions)
+    : basePublicApiQuery(args, api, extraOptions);

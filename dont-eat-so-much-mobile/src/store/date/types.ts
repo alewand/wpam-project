@@ -1,10 +1,10 @@
 import { DateTime } from "luxon";
 
 export interface Week {
-    days: Day[];
+  days: Day[];
 }
 
 export interface Day {
-    name: string;
-    date: DateTime;
+  name: string;
+  date: DateTime;
 }

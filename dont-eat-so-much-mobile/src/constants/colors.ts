@@ -17,4 +17,3 @@ export const CARBS_STRONG = "#33CC66";
 
 export const FAT = "#FFE79A";
 export const FAT_STRONG = "#FFCC00";
-

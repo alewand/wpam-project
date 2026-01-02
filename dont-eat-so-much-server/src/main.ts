@@ -17,6 +17,7 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: "1",
   });
+  app.useLogger(["log", "error", "warn", "debug", "verbose"]);
 
   await app.listen(process.env.PORT ?? 3000);
 }

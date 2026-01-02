@@ -7,7 +7,7 @@ import { ErrorType } from "src/errors/types";
 import { BARCODE_LENGTH } from "src/constants/constants";
 import { MealsOFFService } from "./mealsOff.service";
 import { MealsService } from "./meals.service";
-import { Meal, NewMeal } from "./types";
+import { Meal } from "./types";
 
 @Injectable()
 export class MealsApiService {

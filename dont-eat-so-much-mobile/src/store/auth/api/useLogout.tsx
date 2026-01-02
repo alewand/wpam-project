@@ -4,18 +4,18 @@ import { setTranslatedError } from "../../helpers";
 import { useLogoutMutation } from "../api";
 
 export const useLogout = () => {
-    const [logoutMutation, { isLoading, isSuccess, isError, error }] = useLogoutMutation();
-    const { t } = useTranslation("errors");
-    const [errorMessage, setErrorMessage] = useState<string>("");
+  const [logoutMutation, { isLoading, isSuccess, isError, error }] = useLogoutMutation();
+  const { t } = useTranslation("errors");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-    useEffect(() => {
-        setTranslatedError(isError, t, setErrorMessage, error);
-    }, [isError, error, t]);
+  useEffect(() => {
+    setTranslatedError(isError, t, setErrorMessage, error);
+  }, [isError, error, t]);
 
-    const logout = () => {
-        setErrorMessage("");
-        return logoutMutation();
-    };
+  const logout = () => {
+    setErrorMessage("");
+    return logoutMutation();
+  };
 
-    return { logout, isLoading, isError, isSuccess, error: errorMessage };
-}
+  return { logout, isLoading, isError, isSuccess, error: errorMessage };
+};

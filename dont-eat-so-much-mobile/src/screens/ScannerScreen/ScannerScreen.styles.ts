@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BLACK, WHITE } from "../../constants/colors";
+import { BLACK, TEXT_COLOR, WHITE } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
   permissionContainer: {
@@ -66,6 +66,20 @@ export const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   smallButtonText: {
-    color: "#fff",
+    color: WHITE,
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255,255,255,0.75)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 14,
+    fontWeight: "600",
+    color: TEXT_COLOR,
+    textAlign: "center",
   },
 });

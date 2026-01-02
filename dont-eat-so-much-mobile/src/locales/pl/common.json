@@ -1,26 +1,52 @@
 {
-    "welcome": {
-        "title": "Witaj",
-        "subTitle": "w DON'T EAT SO MUCH",
-        "description": "Cieszymy się, że z nami jesteś!\n Co cię dzisiaj sprowadza?"
-    },
-    "login": {
-        "title": "Logowanie",
-        "button": "Zaloguj się"
-    },
-    "register": {
-        "title": "Rejestracja",
-        "button": "Zarejestruj się"
-    },
-    "scanner": {
-        "hintText": "Nakieruj kamerę na kod kreskowy, aby go zeskanować.",
-        "permissionsNeeded": "Aby korzystać ze skanera kodów kreskowych, potrzebujemy dostępu do kamery urządzenia.",
-        "givePermission": "Udziel dostępu"
-    },
-    "common": {
-        "name": "Imię",
-        "emailAddress": "Adres email",
-        "password": "Hasło",
-        "confirmPassword": "Potwierdź hasło"
+  "welcome": {
+    "title": "Witaj",
+    "subTitle": "w DON'T EAT SO MUCH",
+    "description": "Cieszymy się, że z nami jesteś!\n Co cię dzisiaj sprowadza?"
+  },
+  "login": {
+    "title": "Logowanie",
+    "button": "Zaloguj się"
+  },
+  "register": {
+    "title": "Rejestracja",
+    "button": "Zarejestruj się"
+  },
+  "scanner": {
+    "hintText": "Nakieruj kamerę na kod kreskowy, aby go zeskanować.",
+    "permissionsNeeded": "Aby korzystać ze skanera kodów kreskowych, potrzebujemy dostępu do kamery urządzenia.",
+    "givePermission": "Udziel dostępu",
+    "loading": "Poszukiwanie produktu...",
+    "mealNotFound": {
+      "title": "Nie znaleziono produktu",
+      "description": "Nie udało się znaleźć produktu dla zeskanowanego kodu kreskowego. Spróbuj ponownie lub dodaj produkt ręcznie.",
+      "barcodeLabel": "Zeskanowany kod:"
     }
+  },
+  "consumedMeal": {
+    "amountInGrams": "Ilość w gramach:",
+    "addMealTitle": "Dodaj Posiłek",
+    "editMealTitle": "Edytuj Posiłek",
+    "reset": "Resetuj",
+    "nutritionsTitle": "Wartości odżywcze",
+    "calories": "Kalorie",
+    "protein": "Białko",
+    "fat": "Tłuszcz",
+    "carbohydrates": "Węglowodany",
+    "saturatedFat": "Nasycone",
+    "sugars": "Cukry",
+    "fiber": "Błonnik",
+    "salt": "Sól",
+    "sodium": "Sód",
+    "addButton": "Dodaj",
+    "saveButton": "Zapisz",
+    "addMealSuccess": "Posiłek został pomyślnie dodany.",
+    "editMealSuccess": "Posiłek został pomyślnie zaktualizowany."
+  },
+  "common": {
+    "name": "Imię",
+    "emailAddress": "Adres email",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło"
+  }
 }

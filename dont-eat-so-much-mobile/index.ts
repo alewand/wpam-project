@@ -1,6 +1,6 @@
-import { registerRootComponent } from 'expo';
+import { registerRootComponent } from "expo";
 
-import App from './App';
+import App from "./App";
 
 if (__DEV__) {
   require("./ReactotronConfig");

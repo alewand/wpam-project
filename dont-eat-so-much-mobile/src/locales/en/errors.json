@@ -1,25 +1,27 @@
 {
-    "invalidCredentials": "Invalid login credentials. Please try again.",
-    "validation": {
-        "name": {
-            "required": "Name is required.",
-            "tooShort": "Name must be at least 3 characters long.",
-            "tooLong": "Name can be at most 20 characters long."
-        },
-        "email": {
-            "required": "Email address is required.",
-            "tooShort": "Email address must be at least 1 character long.",
-            "tooLong": "Email address can be at most 50 characters long.",
-            "invalidFormat": "Invalid email address format."
-        },
-        "password": {
-            "required": "Password is required.",
-            "tooShort": "Password must be at least 10 characters long.",
-            "tooLong": "Password can be at most 50 characters long."
-        },
-        "confirmPassword": {
-            "required": "Confirm Password is required.",
-            "mismatch": "Confirm Password does not match password."
-        }
+  "unknownError": "An unknown error occurred. Please try again later.",
+  "invalidCredentials": "Invalid login credentials. Please try again.",
+  "mealNotFound": "Meal with the given barcode was not found.",
+  "validation": {
+    "name": {
+      "required": "Name is required.",
+      "tooShort": "Name must be at least 3 characters long.",
+      "tooLong": "Name can be at most 20 characters long."
+    },
+    "email": {
+      "required": "Email address is required.",
+      "tooShort": "Email address must be at least 1 character long.",
+      "tooLong": "Email address can be at most 50 characters long.",
+      "invalidFormat": "Invalid email address format."
+    },
+    "password": {
+      "required": "Password is required.",
+      "tooShort": "Password must be at least 10 characters long.",
+      "tooLong": "Password can be at most 50 characters long."
+    },
+    "confirmPassword": {
+      "required": "Confirm Password is required.",
+      "mismatch": "Confirm Password does not match password."
     }
+  }
 }

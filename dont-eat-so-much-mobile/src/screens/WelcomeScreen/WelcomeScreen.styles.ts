@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
-import { BACKGROUND_COLOR, MAIN_COLOR, SECOND_TEXT_COLOR, TEXT_COLOR } from "../../constants/colors";
+import {
+  BACKGROUND_COLOR,
+  MAIN_COLOR,
+  SECOND_TEXT_COLOR,
+  TEXT_COLOR,
+} from "../../constants/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,7 +13,7 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    padding: 16, 
+    padding: 16,
   },
   logo: {
     resizeMode: "contain",
@@ -43,7 +48,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     padding: 16,
     gap: 18,
-    alignItems: 'center',
+    alignItems: "center",
   },
   button: {
     minWidth: 280,
