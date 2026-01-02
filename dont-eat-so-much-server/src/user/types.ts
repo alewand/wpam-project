@@ -1,10 +1,10 @@
-import { users } from 'src/drizzle/schema';
+import { users } from "src/drizzle/schema";
 
 export type RawUser = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
-export type User = Omit<RawUser, 'password' | 'createdAt' | 'updatedAt'>;
-export type UserWithPassword = Omit<RawUser, 'createdAt' | 'updatedAt'>;
+export type User = Omit<RawUser, "password" | "createdAt" | "updatedAt">;
+export type UserWithPassword = Omit<RawUser, "createdAt" | "updatedAt">;
 
 export interface UserWithTokens {
   user: User;

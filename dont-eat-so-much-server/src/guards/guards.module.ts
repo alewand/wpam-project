@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-import { AuthGuard } from './auth.guard';
-import { TokensModule } from 'src/tokens/tokens.module';
+import { Module } from "@nestjs/common";
+import { AuthGuard } from "./auth.guard";
+import { TokensModule } from "src/tokens/tokens.module";
 
 @Module({
   imports: [TokensModule],

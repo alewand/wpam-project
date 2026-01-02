@@ -1,21 +1,73 @@
 {
-    "welcome": {
-        "title": "Welcome",
-        "subTitle": "to DON'T EAT SO MUCH",
-        "description": "We're glad you're here!\n What brings you here today?"
+  "welcome": {
+    "title": "Welcome",
+    "subTitle": "to DON'T EAT SO MUCH",
+    "description": "We're glad you're here!\n What brings you here today?"
+  },
+  "login": {
+    "title": "Logging In",
+    "button": "Log In"
+  },
+  "register": {
+    "title": "Registration",
+    "button": "Register"
+  },
+  "scanner": {
+    "hintText": "Point the camera at a barcode to scan it.",
+    "permissionsNeeded": "To use the barcode scanner, we need access to your device's camera.",
+    "givePermission": "Give Permission",
+    "loading": "Searching for meal...",
+    "manualInputButton": "Enter code manually",
+    "mealNotFound": {
+      "title": "Product not found",
+      "description": "Could not find a product for the scanned barcode. Try again or add the product manually.",
+      "barcodeLabel": "Scanned code:"
     },
-    "login": {
-        "title": "Logging In",
-        "button": "Log In"
-    },
-    "register": {
-        "title": "Registration",
-        "button": "Register"
-    },
-    "common": {
-        "name": "Name",
-        "emailAddress": "Email Address",
-        "password": "Password",
-        "confirmPassword": "Confirm Password"
+    "manualInput": {
+      "title": "Enter barcode",
+      "description": "Enter the product barcode",
+      "placeholder": "Enter barcode",
+      "cancel": "Cancel",
+      "confirm": "Confirm"
     }
+  },
+  "consumedMeal": {
+    "amountInGrams": "Amount in grams:",
+    "addMealTitle": "Add Meal",
+    "editMealTitle": "Edit Meal",
+    "reset": "Reset",
+    "nutritionsTitle": "Nutrition facts",
+    "calories": "Calories",
+    "protein": "Protein",
+    "fat": "Fat",
+    "carbohydrates": "Carbohydrates",
+    "saturatedFat": "Saturated fat",
+    "sugars": "Sugars",
+    "fiber": "Fiber",
+    "salt": "Salt",
+    "sodium": "Sodium",
+    "addButton": "Add",
+    "saveButton": "Save",
+    "addMealSuccess": "Meal added successfully.",
+    "editMealSuccess": "Meal updated successfully.",
+    "deleteMealSuccess": "Meal deleted successfully."
+  },
+  "common": {
+    "name": "Name",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "meal": {
+    "proteinShort": "P.",
+    "carbsShort": "C.",
+    "fatShort": "F.",
+    "noMealsTitle": "No meals",
+    "noMealsDescription": "You don't have any meals logged for this day yet. Add your first meal!",
+    "saturatedFatShort": "S.",
+    "sugarsShort": "Sg.",
+    "fiberShort": "Fb.",
+    "saltShort": "Salt",
+    "sodiumShort": "Na"
+  }
 }

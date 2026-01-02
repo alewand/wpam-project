@@ -1,27 +1,28 @@
 {
-    "required": "To pole jest wymagane",
-    "invalidEmail": "Proszę wprowadzić poprawny adres email",
-    "passwordMinLength": "Hasło musi mieć co najmniej 6 znaków",
-    "validation": {
-        "name": {
-            "required": "Imię jest wymagane.",
-            "tooShort": "Imię musi mieć co najmniej 3 znaki.",
-            "tooLong": "Imię może mieć maksymalnie 20 znaków."
-        },
-        "email": {
-            "required": "Adres email jest wymagany.",
-            "tooShort": "Adres email musi mieć co najmniej 1 znak.",
-            "tooLong": "Adres email może mieć maksymalnie 50 znaków.",
-            "invalidFormat": "Nieprawidłowy format adresu email."
-        },
-        "password": {
-            "required": "Hasło jest wymagane.",
-            "tooShort": "Hasło musi mieć co najmniej 10 znaków.",
-            "tooLong": "Hasło może mieć maksymalnie 50 znaków."
-        },
-        "confirmPassword": {
-            "required": "Potwierdzenie hasła jest wymagane.",
-            "mismatch": "Potwierdzenie hasła nie zgadza się z hasłem."
-        }
+  "unknownError": "Wystąpił nieznany błąd. Proszę spróbować ponownie później.",
+  "invalidCredentials": "Nieprawidłowe dane logowania. Proszę spróbować ponownie.",
+  "mealNotFound": "Posiłek o podanym kodzie kreskowym nie został znaleziony.",
+  "networkError": "Wystąpił błąd połączenia. Sprawdź połączenie internetowe i spróbuj ponownie.",
+  "validation": {
+    "name": {
+      "required": "Imię jest wymagane.",
+      "tooShort": "Imię musi mieć co najmniej 3 znaki.",
+      "tooLong": "Imię może mieć maksymalnie 20 znaków."
+    },
+    "email": {
+      "required": "Adres email jest wymagany.",
+      "tooShort": "Adres email musi mieć co najmniej 1 znak.",
+      "tooLong": "Adres email może mieć maksymalnie 50 znaków.",
+      "invalidFormat": "Nieprawidłowy format adresu email."
+    },
+    "password": {
+      "required": "Hasło jest wymagane.",
+      "tooShort": "Hasło musi mieć co najmniej 10 znaków.",
+      "tooLong": "Hasło może mieć maksymalnie 50 znaków."
+    },
+    "confirmPassword": {
+      "required": "Potwierdzenie hasła jest wymagane.",
+      "mismatch": "Potwierdzenie hasła nie zgadza się z hasłem."
     }
+  }
 }

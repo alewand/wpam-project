@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { BACKGROUND_COLOR, MAIN_COLOR, TEXT_COLOR, } from "../../constants/colors";
+import { BACKGROUND_COLOR, MAIN_COLOR, TEXT_COLOR } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -35,12 +35,12 @@ export const styles = StyleSheet.create({
     color: TEXT_COLOR,
   },
   formContainer: {
-      flexDirection: 'column',
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 16,
-      gap: 25,
+    flexDirection: "column",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+    gap: 25,
   },
   button: {
     padding: 12,

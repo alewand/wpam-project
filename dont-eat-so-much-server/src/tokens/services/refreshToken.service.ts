@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { createHash, randomBytes } from 'crypto';
-import { DRIZZLE } from 'src/drizzle/drizzle.module';
-import { type DrizzleDatabase } from 'src/drizzle/types';
-import * as schema from 'src/drizzle/schema';
-import { DateTime } from 'luxon';
-import { REFRESH_TOKEN_EXPIRY_DAYS } from 'src/constants/constants';
-import { and, eq } from 'drizzle-orm';
-import { RefreshToken } from '../types';
+import { Inject, Injectable } from "@nestjs/common";
+import { createHash, randomBytes } from "crypto";
+import { DRIZZLE } from "src/drizzle/drizzle.module";
+import { type DrizzleDatabase } from "src/drizzle/types";
+import * as schema from "src/drizzle/schema";
+import { DateTime } from "luxon";
+import { REFRESH_TOKEN_EXPIRY_DAYS } from "src/constants/constants";
+import { and, eq } from "drizzle-orm";
+import { RefreshToken } from "../types";
 
 @Injectable()
 export class RefreshTokenService {
@@ -56,10 +56,10 @@ export class RefreshTokenService {
   }
 
   private generateToken(): string {
-    return randomBytes(128).toString('hex');
+    return randomBytes(128).toString("hex");
   }
 
   private getHashedToken(token: string): string {
-    return createHash('sha512').update(token).digest('hex');
+    return createHash("sha512").update(token).digest("hex");
   }
 }

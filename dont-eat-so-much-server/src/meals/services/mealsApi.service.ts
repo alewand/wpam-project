@@ -2,12 +2,12 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
-} from '@nestjs/common';
-import { ErrorType } from 'src/errors/types';
-import { BARCODE_LENGTH } from 'src/constants/constants';
-import { MealsOFFService } from './mealsOff.service';
-import { MealsService } from './meals.service';
-import { Meal, NewMeal } from './types';
+} from "@nestjs/common";
+import { ErrorType } from "src/errors/types";
+import { BARCODE_LENGTH } from "src/constants/constants";
+import { MealsOFFService } from "./mealsOff.service";
+import { MealsService } from "./meals.service";
+import { Meal } from "./types";
 
 @Injectable()
 export class MealsApiService {
@@ -21,7 +21,7 @@ export class MealsApiService {
       throw new BadRequestException(ErrorType.INVALID_BARCODE);
     }
 
-    let shouldBeReplaced = false;
+    let shouldBeRefreshed = false;
     const mealFromDB = await this.mealsService.getMealByBarcode(barcode);
 
     if (mealFromDB) {
@@ -29,7 +29,7 @@ export class MealsApiService {
         return this.mealsService.mapRawMealToMeal(mealFromDB);
       }
 
-      shouldBeReplaced = true;
+      shouldBeRefreshed = true;
     }
 
     const mealFromApi = await this.mealsOFFService.getMealFromApi(barcode);
@@ -44,26 +44,37 @@ export class MealsApiService {
       throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
     }
 
-    return shouldBeReplaced && mealFromDB
-      ? await this.mealsService.replaceMeal(mealFromDB.mealId, mappedMeal)
-      : await this.mealsService.createMeal(mappedMeal);
-  }
+    if (shouldBeRefreshed && mealFromDB) {
+      const refreshedMeal = await this.mealsService.editMeal(
+        mealFromDB.mealId,
+        mappedMeal,
+      );
 
-  async createMeal(meal: NewMeal, userId: string): Promise<Meal> {
-    return this.mealsService.createMeal({ ...meal, addedBy: userId });
-  }
-
-  async getLatestMealsByUser(userId: string, page: number): Promise<Meal[]> {
-    if (page < 1) {
-      throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
+      if (refreshedMeal) {
+        return refreshedMeal;
+      } else {
+        throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
+      }
     }
 
-    const meals = await this.mealsService.getLatestByUser(userId, page);
-
-    if (!meals.length) {
-      throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
-    }
-
-    return meals;
+    return this.mealsService.createMeal(mappedMeal);
   }
+
+  // async createMeal(meal: NewMeal, userId: string): Promise<Meal> {
+  //   return this.mealsService.createMeal({ ...meal, addedBy: userId });
+  // };
+
+  // async getLatestMealsByUser(userId: string, page: number): Promise<Meal[]> {
+  //   if (page < 1) {
+  //     throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
+  //   }
+
+  //   const meals = await this.mealsService.getLatestByUser(userId, page);
+
+  //   if (!meals.length) {
+  //     throw new NotFoundException(ErrorType.MEAL_NOT_FOUND);
+  //   }
+
+  //   return meals;
+  // };
 }

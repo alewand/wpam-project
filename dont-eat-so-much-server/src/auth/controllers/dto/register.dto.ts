@@ -1,5 +1,5 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { User } from 'src/user/types';
+import { IsEmail, IsString, MaxLength, MinLength } from "class-validator";
+import { User } from "src/user/types";
 
 export class RegisterDto {
   @IsString()
@@ -18,7 +18,7 @@ export class RegisterDto {
 }
 
 export interface RegisterReturn {
-  user: Omit<User, 'password'>;
+  user: Omit<User, "password">;
   accessToken: string;
   refreshToken: string;
 }

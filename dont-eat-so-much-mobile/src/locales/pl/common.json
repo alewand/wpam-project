@@ -1,21 +1,73 @@
 {
-    "welcome": {
-        "title": "Witaj",
-        "subTitle": "w DON'T EAT SO MUCH",
-        "description": "Cieszymy się, że z nami jesteś!\n Co cię dzisiaj sprowadza?"
+  "welcome": {
+    "title": "Witaj",
+    "subTitle": "w DON'T EAT SO MUCH",
+    "description": "Cieszymy się, że z nami jesteś!\n Co cię dzisiaj sprowadza?"
+  },
+  "login": {
+    "title": "Logowanie",
+    "button": "Zaloguj się"
+  },
+  "register": {
+    "title": "Rejestracja",
+    "button": "Zarejestruj się"
+  },
+  "scanner": {
+    "hintText": "Nakieruj kamerę na kod kreskowy, aby go zeskanować.",
+    "permissionsNeeded": "Aby korzystać ze skanera kodów kreskowych, potrzebujemy dostępu do kamery urządzenia.",
+    "givePermission": "Udziel dostępu",
+    "loading": "Poszukiwanie produktu...",
+    "manualInputButton": "Wpisz kod ręcznie",
+    "mealNotFound": {
+      "title": "Nie znaleziono produktu",
+      "description": "Nie udało się znaleźć produktu dla zeskanowanego kodu kreskowego. Spróbuj ponownie lub dodaj produkt ręcznie.",
+      "barcodeLabel": "Zeskanowany kod:"
     },
-    "login": {
-        "title": "Logowanie",
-        "button": "Zaloguj się"
-    },
-    "register": {
-        "title": "Rejestracja",
-        "button": "Zarejestruj się"
-    },
-    "common": {
-        "name": "Imię",
-        "emailAddress": "Adres email",
-        "password": "Hasło",
-        "confirmPassword": "Potwierdź hasło"
+    "manualInput": {
+      "title": "Wpisz kod kreskowy",
+      "description": "Wprowadź kod kreskowy produktu",
+      "placeholder": "Wpisz kod kreskowy",
+      "cancel": "Anuluj",
+      "confirm": "Potwierdź"
     }
+  },
+  "consumedMeal": {
+    "amountInGrams": "Ilość w gramach:",
+    "addMealTitle": "Dodaj Posiłek",
+    "editMealTitle": "Edytuj Posiłek",
+    "reset": "Resetuj",
+    "nutritionsTitle": "Wartości odżywcze",
+    "calories": "Kalorie",
+    "protein": "Białko",
+    "fat": "Tłuszcz",
+    "carbohydrates": "Węglowodany",
+    "saturatedFat": "Nasycone",
+    "sugars": "Cukry",
+    "fiber": "Błonnik",
+    "salt": "Sól",
+    "sodium": "Sód",
+    "addButton": "Dodaj",
+    "saveButton": "Zapisz",
+    "addMealSuccess": "Posiłek został pomyślnie dodany.",
+    "editMealSuccess": "Posiłek został pomyślnie zaktualizowany.",
+    "deleteMealSuccess": "Posiłek został pomyślnie usunięty."
+  },
+  "common": {
+    "name": "Imię",
+    "emailAddress": "Adres email",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło"
+  },
+  "meal": {
+    "proteinShort": "B.",
+    "carbsShort": "W.",
+    "fatShort": "Tł.",
+    "noMealsTitle": "Brak posiłków",
+    "noMealsDescription": "Nie masz jeszcze żadnych posiłków w tym dniu. Dodaj pierwszy posiłek!",
+    "saturatedFatShort": "N.",
+    "sugarsShort": "C.",
+    "fiberShort": "Bł.",
+    "saltShort": "Sól",
+    "sodiumShort": "Na"
+  }
 }

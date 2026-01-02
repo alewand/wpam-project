@@ -1,5 +1,5 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
-import { User } from 'src/user/types';
+import { IsEmail, IsString, MaxLength, MinLength } from "class-validator";
+import { User } from "src/user/types";
 
 export class LoginDto {
   @IsEmail()
@@ -13,7 +13,7 @@ export class LoginDto {
 }
 
 export interface LoginReturn {
-  user: Omit<User, 'password'>;
+  user: Omit<User, "password">;
   accessToken: string;
   refreshToken: string;
 }

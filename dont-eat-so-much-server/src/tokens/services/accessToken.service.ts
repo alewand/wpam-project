@@ -1,10 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { DateTime } from 'luxon';
-import { ACCESS_TOKEN_ISS } from 'src/constants/constants';
-import { ErrorType } from 'src/errors/types';
-import { AuthUserPayload } from 'src/guards/auth.guard';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService, TokenExpiredError } from "@nestjs/jwt";
+import { DateTime } from "luxon";
+import { ACCESS_TOKEN_ISS } from "src/constants/constants";
+import { ErrorType } from "src/errors/types";
+import { AuthUserPayload } from "src/guards/auth.guard";
 
 export interface AccessTokenPayload {
   sub: string;
@@ -51,6 +51,6 @@ export class AccessTokenService {
   }
 
   private getSecret(): string | undefined {
-    return this.configService.get<string>('ACCESS_TOKEN_SECRET');
+    return this.configService.get<string>("ACCESS_TOKEN_SECRET");
   }
 }
