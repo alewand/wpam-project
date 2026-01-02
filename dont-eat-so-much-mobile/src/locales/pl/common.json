@@ -63,6 +63,11 @@
     "carbsShort": "W.",
     "fatShort": "Tł.",
     "noMealsTitle": "Brak posiłków",
-    "noMealsDescription": "Nie masz jeszcze żadnych posiłków w tym dniu. Dodaj pierwszy posiłek!"
+    "noMealsDescription": "Nie masz jeszcze żadnych posiłków w tym dniu. Dodaj pierwszy posiłek!",
+    "saturatedFatShort": "N.",
+    "sugarsShort": "C.",
+    "fiberShort": "Bł.",
+    "saltShort": "Sól",
+    "sodiumShort": "Na"
   }
 }

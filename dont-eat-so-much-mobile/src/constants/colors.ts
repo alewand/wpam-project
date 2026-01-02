@@ -17,3 +17,11 @@ export const CARBS_STRONG = "#33CC66";
 
 export const FAT = "#FFE79A";
 export const FAT_STRONG = "#FFCC00";
+
+export const GRAY_LIGHT = "#E5E5E5";
+
+export const SATURATED_FAT_COLOR = "#FF6B6B";
+export const SUGARS_COLOR = "#FFD93D";
+export const FIBER_COLOR = "#6BCF7F";
+export const SALT_COLOR = "#95A5A6";
+export const SODIUM_COLOR = "#3498DB";

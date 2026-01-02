@@ -1,5 +1,6 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { Meal, Nutritions } from "../store/meal/types";
+import { calculateNutritionValue } from "./helpers";
 
 export interface UseCalculateNutritionsProps {
   grams: number;
@@ -19,27 +20,22 @@ export const useCalculateNutritions = ({ grams, meal }: UseCalculateNutritionsPr
     sodiumPer100g,
   } = meal;
 
-  const calculateNutritionValue = useCallback(
-    (per100gValue: number): number => {
-      return Math.round(((per100gValue * grams) / 100) * 10) / 10;
-    },
-    [grams]
-  );
-
   const nutritions: Nutritions = useMemo(
     () => ({
-      energyKcal: calculateNutritionValue(energyKcalPer100g),
-      protein: calculateNutritionValue(proteinPer100g),
-      fat: calculateNutritionValue(fatPer100g),
-      carbohydrates: calculateNutritionValue(carbohydratesPer100g),
-      saturatedFat: saturatedFatPer100g ? calculateNutritionValue(saturatedFatPer100g) : undefined,
-      sugars: sugarsPer100g ? calculateNutritionValue(sugarsPer100g) : undefined,
-      fiber: fiberPer100g ? calculateNutritionValue(fiberPer100g) : undefined,
-      salt: saltPer100g ? calculateNutritionValue(saltPer100g) : undefined,
-      sodium: sodiumPer100g ? calculateNutritionValue(sodiumPer100g) : undefined,
+      energyKcal: calculateNutritionValue(energyKcalPer100g, grams),
+      protein: calculateNutritionValue(proteinPer100g, grams),
+      fat: calculateNutritionValue(fatPer100g, grams),
+      carbohydrates: calculateNutritionValue(carbohydratesPer100g, grams),
+      saturatedFat: saturatedFatPer100g
+        ? calculateNutritionValue(saturatedFatPer100g, grams)
+        : undefined,
+      sugars: sugarsPer100g ? calculateNutritionValue(sugarsPer100g, grams) : undefined,
+      fiber: fiberPer100g ? calculateNutritionValue(fiberPer100g, grams) : undefined,
+      salt: saltPer100g ? calculateNutritionValue(saltPer100g, grams) : undefined,
+      sodium: sodiumPer100g ? calculateNutritionValue(sodiumPer100g, grams) : undefined,
     }),
     [
-      calculateNutritionValue,
+      grams,
       energyKcalPer100g,
       proteinPer100g,
       fatPer100g,

@@ -11,6 +11,7 @@ import { useCallback } from "react";
 import { MAIN_COLOR } from "../../constants/colors";
 import { MealCard } from "../../components/MealCard/MealCard";
 import { ConsumedMeal } from "../../store/meal/types";
+import { NutritionProgressBar } from "../../components/NutritionProgressBar/NutritionProgressBar";
 
 const addProductIcon = require("../../assets/icons/addProduct.png");
 const barCodeIcon = require("../../assets/icons/barCode.png");
@@ -42,7 +43,7 @@ export const MealScreen = () => {
         </View>
       </View>
     ),
-    [resetDate, handleBarcodePress, isLoading]
+    [resetDate, handleBarcodePress]
   );
 
   const EmptyList = useCallback(() => {
@@ -76,14 +77,18 @@ export const MealScreen = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <FlashList
         data={consumedMeals ?? []}
         keyExtractor={(item) => item.consumedMealId}
         renderItem={renderItem}
         ListHeaderComponent={<ListHeader />}
         ListEmptyComponent={<EmptyList />}
+        contentContainerStyle={styles.listContent}
       />
+      <View style={styles.progressBarContainer}>
+        <NutritionProgressBar />
+      </View>
     </SafeAreaView>
   );
 };

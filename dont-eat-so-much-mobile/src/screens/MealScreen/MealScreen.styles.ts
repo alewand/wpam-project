@@ -3,6 +3,18 @@ import { StyleSheet } from "react-native";
 import { MAIN_COLOR, SECOND_TEXT_COLOR, TEXT_COLOR } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  listContent: {
+    paddingBottom: 100,
+  },
+  progressBarContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
   button: {
     alignItems: "center",
     backgroundColor: MAIN_COLOR,

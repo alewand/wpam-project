@@ -63,6 +63,11 @@
     "carbsShort": "C.",
     "fatShort": "F.",
     "noMealsTitle": "No meals",
-    "noMealsDescription": "You don't have any meals logged for this day yet. Add your first meal!"
+    "noMealsDescription": "You don't have any meals logged for this day yet. Add your first meal!",
+    "saturatedFatShort": "S.",
+    "sugarsShort": "Sg.",
+    "fiberShort": "Fb.",
+    "saltShort": "Salt",
+    "sodiumShort": "Na"
   }
 }
