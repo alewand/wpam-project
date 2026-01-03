@@ -8,8 +8,8 @@ import { ApiErrorsTranslationMap } from "../../../constants/errors";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
 
-export const useAddCustomMeal = () => {
-  const [createMeal, { isLoading, error }] = useCreateMealMutation();
+export const useCreateMeal = () => {
+  const [createMeal, { isLoading }] = useCreateMealMutation();
   const { publish } = useSnackbar();
   const { t } = useTranslation("errors");
 
@@ -31,6 +31,5 @@ export const useAddCustomMeal = () => {
   return {
     createMeal: createCustomMeal,
     isLoading,
-    error,
   };
 };

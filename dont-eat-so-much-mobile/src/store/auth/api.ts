@@ -41,10 +41,27 @@ export const authApi = createApi({
       },
       invalidatesTags: ["User"],
     }),
-    logout: builder.mutation<void, void>({
-      query: () => ({
+    logout: builder.mutation<void, { refreshToken: string }>({
+      query: (body) => ({
         url: "/auth/logout",
-        method: "POST",
+        method: "DELETE",
+        body,
+      }),
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(clearUserCredentials());
+        } catch {
+          return;
+        }
+      },
+      invalidatesTags: ["User"],
+      extraOptions: { isPrivate: true },
+    }),
+    logoutFromAllDevices: builder.mutation<void, void>({
+      query: () => ({
+        url: "/auth/logout-all",
+        method: "DELETE",
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
@@ -60,4 +77,9 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authApi;
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useLogoutFromAllDevicesMutation,
+} = authApi;

@@ -4,9 +4,9 @@ services:
     container_name: dont-eat-so-much-db
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-dont_eat_so_much}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
@@ -16,10 +16,13 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+    networks:
+      - app-network
+
   server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: dont-eat-so-much-server
     depends_on:
       database:
@@ -31,12 +34,19 @@ services:
       WATCHPACK_POLLING: "true"
       POSTGRES_HOST: database
       POSTGRES_PORT: 5432
+      PORT: 3000
     ports:
       - "3000:3000"
     command: sh -c "npm run db:migrate && npm run start:dev"
     volumes:
       - .:/app
       - /app/node_modules
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -59,6 +59,10 @@
     "password": "Hasło",
     "confirmPassword": "Potwierdź hasło"
   },
+  "bottomTabs": {
+    "meals": "Posiłki",
+    "profile": "Profil"
+  },
   "meal": {
     "proteinShort": "B.",
     "carbsShort": "W.",
@@ -116,5 +120,61 @@
       "fatInvalid": "Tłuszcz musi być między 0 a 100",
       "carbohydratesInvalid": "Węglowodany muszą być między 0 a 100"
     }
+  },
+  "profile": {
+    "title": "Profil",
+    "userData": {
+      "title": "Dane użytkownika",
+      "name": "Imię",
+      "email": "Email"
+    },
+    "updateName": {
+      "title": "Zmień imię",
+      "name": "Imię",
+      "namePlaceholder": "Wprowadź imię",
+      "saveButton": "Zapisz"
+    },
+    "updateEmail": {
+      "title": "Zmień email",
+      "email": "Email",
+      "emailPlaceholder": "Wprowadź email",
+      "password": "Aktualne hasło",
+      "passwordPlaceholder": "Wprowadź aktualne hasło",
+      "saveButton": "Zapisz",
+      "success": "Email został pomyślnie zmieniony"
+    },
+    "updatePassword": {
+      "title": "Zmień hasło",
+      "newPassword": "Nowe hasło",
+      "newPasswordPlaceholder": "Wprowadź nowe hasło",
+      "password": "Aktualne hasło",
+      "passwordPlaceholder": "Wprowadź aktualne hasło",
+      "saveButton": "Zapisz",
+      "success": "Hasło zostało pomyślnie zmienione"
+    },
+    "limits": {
+      "title": "Dzienne limity",
+      "calories": "Kalorie (kcal)",
+      "caloriesPlaceholder": "Wprowadź limit kalorii",
+      "protein": "Białko (g)",
+      "proteinPlaceholder": "Wprowadź limit białka",
+      "fat": "Tłuszcz (g)",
+      "fatPlaceholder": "Wprowadź limit tłuszczu",
+      "carbohydrates": "Węglowodany (g)",
+      "carbohydratesPlaceholder": "Wprowadź limit węglowodanów",
+      "saveButton": "Zapisz limity",
+      "saveSuccess": "Limity zostały zapisane pomyślnie",
+      "saveError": "Nieprawidłowe wartości limitów. Wprowadź poprawne liczby."
+    },
+    "logout": "Wyloguj się",
+    "logoutFromAllDevices": "Wyloguj się ze wszystkich urządzeń",
+    "deleteAccount": {
+      "title": "Usuń konto",
+      "password": "Hasło",
+      "deleteButton": "Usuń konto",
+      "confirmMessage": "Czy na pewno chcesz usunąć swoje konto? Potwierdź to hasłem.",
+      "success": "Konto zostało pomyślnie usunięte"
+    },
+    "cancel": "Anuluj"
   }
 }

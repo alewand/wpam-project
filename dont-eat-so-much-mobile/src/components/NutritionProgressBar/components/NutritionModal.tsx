@@ -68,22 +68,27 @@ export const NutritionModal = ({ visible, onClose, progress }: NutritionModalPro
       | "sodium",
     showLetter = false
   ) => {
+    const isAdditionalMacro = ["saturatedFat", "sugars", "fiber", "salt", "sodium"].includes(
+      macroType
+    );
+    const color = isAdditionalMacro
+      ? getColorForMacro(macroType)
+      : progressItem.isExceeded
+        ? ERROR
+        : ["calories", "protein", "carbs", "fat"].includes(macroType)
+          ? getTintColor(
+              progressItem.isExceeded,
+              macroType as "calories" | "protein" | "carbs" | "fat"
+            )
+          : getColorForMacro(macroType);
+
     return (
       <View style={styles.circleContainer}>
         <AnimatedCircularProgress
           size={circleSize}
           width={strokeWidth}
-          fill={Math.min(progressItem.progress * 100, 100)}
-          tintColor={
-            progressItem.isExceeded
-              ? ERROR
-              : ["calories", "protein", "carbs", "fat"].includes(macroType)
-                ? getTintColor(
-                    progressItem.isExceeded,
-                    macroType as "calories" | "protein" | "carbs" | "fat"
-                  )
-                : getColorForMacro(macroType)
-          }
+          fill={isAdditionalMacro ? 100 : Math.min(progressItem.progress * 100, 100)}
+          tintColor={color}
           backgroundColor={GRAY_LIGHT}
           rotation={0}
           lineCap="round"
@@ -112,7 +117,9 @@ export const NutritionModal = ({ visible, onClose, progress }: NutritionModalPro
           )}
         </AnimatedCircularProgress>
         <Text style={styles.circleValue}>
-          {formatNumber(progressItem.current)} / {formatNumber(progressItem.limit)}
+          {isAdditionalMacro
+            ? formatNumber(progressItem.current)
+            : `${formatNumber(progressItem.current)} / ${formatNumber(progressItem.limit)}`}
         </Text>
       </View>
     );

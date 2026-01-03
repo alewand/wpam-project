@@ -4,7 +4,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  IsUUID,
   Max,
   MaxLength,
   Min,
@@ -23,12 +22,12 @@ export class CreateMealDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(96)
+  @MaxLength(128)
   name: string;
 
   @IsOptional()
   @IsString()
-  @MaxLength(96)
+  @MaxLength(128)
   brand?: string;
 
   @IsNumber()
@@ -89,9 +88,4 @@ export class CreateMealDto {
   @Max(100000)
   @Transform(({ value }: { value: string }) => parseFloat(value) ?? null)
   sodiumPer100g?: number | null;
-
-  @IsOptional()
-  @IsString()
-  @IsUUID(4)
-  addedBy?: string | null;
 }

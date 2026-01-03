@@ -1,6 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GramsInput } from "./components/GramsInput";
 import {
+  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -13,7 +14,6 @@ import { Header } from "../../components/Header/Header";
 import { styles } from "./ConsumedMealScreen.styles";
 import { useConsumedMealScreen } from "./hooks/useConsumedMealScreen";
 import { NutritionsView } from "./components/NutritionsView";
-import { ActivityIndicator } from "react-native-paper";
 import { WHITE } from "../../constants/colors";
 import { DateBar } from "../../components/DateBar/DateBar";
 import { useHardwareBackHandler } from "../../hooks/useHardwareBackHandler";

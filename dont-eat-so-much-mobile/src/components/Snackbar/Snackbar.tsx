@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { Snackbar } from "react-native-paper";
+import { Snackbar, Portal } from "react-native-paper";
 import { Text } from "react-native";
 import { styles } from "./Snackbar.styles";
 
@@ -27,14 +27,17 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
   return (
     <SnackbarContext.Provider value={{ publish }}>
       {children}
-      <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
-        duration={2000}
-        style={styles.snackbar}
-      >
-        <Text style={styles.message}>{message}</Text>
-      </Snackbar>
+      <Portal>
+        <Snackbar
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          duration={2000}
+          style={styles.snackbar}
+          wrapperStyle={{ zIndex: 10000, elevation: 10000 }}
+        >
+          <Text style={styles.message}>{message}</Text>
+        </Snackbar>
+      </Portal>
     </SnackbarContext.Provider>
   );
 };

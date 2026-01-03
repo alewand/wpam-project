@@ -86,13 +86,6 @@ export class MealsApiService {
     userId: string,
   ): Promise<Meal> {
     if (createCustomMealDto.barcode) {
-      if (
-        createCustomMealDto.barcode.length !== 8 &&
-        createCustomMealDto.barcode.length !== 13
-      ) {
-        throw new BadRequestException(ErrorType.INVALID_BARCODE);
-      }
-
       const existingMeal = await this.mealsService.getMealByBarcode(
         createCustomMealDto.barcode,
       );

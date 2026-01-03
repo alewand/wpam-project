@@ -18,10 +18,10 @@ import { LoginRequest } from "../../store/auth/types";
 import { FormField } from "../../components/FormField/FormField";
 import { AppNavigation } from "../../navigation/Navigation";
 import { Header } from "../../components/Header/Header";
-import { useDisplayError } from "../../hooks/useDisplayError";
 import { useLogin } from "../../store/auth/api/useLogin";
 import { getFormButtonColor, isFormButtonDisabled } from "./helpers";
 import { useCallback, useEffect } from "react";
+import { WHITE } from "../../constants/colors";
 
 const logo = require("../../assets/logo.png");
 const emailIcon = require("../../assets/icons/email.png");
@@ -40,11 +40,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export const LoginScreen = () => {
-  const { login, isLoading, isSuccess, isError, error, errorRaw } = useLogin();
+  const { login, isLoading, isSuccess } = useLogin();
   const navigation = useNavigation<AppNavigation>();
   const { t } = useTranslation();
-
-  useDisplayError({ isError, error, errorRaw });
 
   const navigateToWelcome = useCallback(() => {
     navigation.navigate("Welcome");
@@ -68,7 +66,7 @@ export const LoginScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header onGoBack={navigateToWelcome} />
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.keyboardView}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
@@ -116,7 +114,7 @@ export const LoginScreen = () => {
                     disabled={isFormButtonDisabled(isLoading, values, errors)}
                   >
                     {isLoading ? (
-                      <ActivityIndicator size="small" color="#FFFFFF" />
+                      <ActivityIndicator size="small" color={WHITE} />
                     ) : (
                       <Text style={styles.loginButtonText}>{t("common:login:button")}</Text>
                     )}

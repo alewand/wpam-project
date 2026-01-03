@@ -52,6 +52,13 @@ export const useDateBar = ({ resetDate }: UseDateBarProps) => {
     [selectedDay, currentDay]
   );
 
+  const handleDayPress = useCallback(
+    (date: DateTime) => {
+      dispatch(setSelectedDay(date.toISO() ?? getCurrentDay()));
+    },
+    [dispatch]
+  );
+
   const handlePreviousWeek = useCallback(() => {
     dispatch(setPreviousWeek());
   }, [dispatch]);
@@ -59,13 +66,6 @@ export const useDateBar = ({ resetDate }: UseDateBarProps) => {
   const handleNextWeek = useCallback(() => {
     dispatch(setNextWeek());
   }, [dispatch]);
-
-  const handleDayPress = useCallback(
-    (date: DateTime) => {
-      dispatch(setSelectedDay(date.toISO() ?? getCurrentDay()));
-    },
-    [dispatch]
-  );
 
   const handleGoBackToSelectedDay = useCallback(() => {
     dispatch(setSelectedDay(getCurrentDay()));

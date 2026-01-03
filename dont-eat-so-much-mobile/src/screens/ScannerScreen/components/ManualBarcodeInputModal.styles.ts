@@ -92,3 +92,4 @@ export const styles = StyleSheet.create({
     color: SECOND_TEXT_COLOR,
   },
 });
+

@@ -4,6 +4,7 @@
   "mealNotFound": "Posiłek o podanym kodzie kreskowym nie został znaleziony.",
   "networkError": "Wystąpił błąd połączenia. Sprawdź połączenie internetowe i spróbuj ponownie.",
   "barcodeAlreadyExists": "Posiłek o tym kodzie kreskowym już istnieje. Nie możesz go dodać ponownie.",
+  "userAlreadyExists": "Użytkownik o tym adresie email już istnieje. Użyj innego adresu email.",
   "validation": {
     "name": {
       "required": "Nazwa jest wymagana."

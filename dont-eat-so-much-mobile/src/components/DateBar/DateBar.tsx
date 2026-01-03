@@ -1,5 +1,6 @@
 import { Image, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-gesture-handler";
+import { memo, useMemo } from "react";
 import { styles } from "./DateBar.styles";
 import { useDateBar } from "./hooks/useDateBar";
 
@@ -12,7 +13,7 @@ const goRightIcon = require("../../assets/icons/goRight.png");
 const goBackIcon = require("../../assets/icons/goBackToSelectedDay.png");
 const goBackDisabledIcon = require("../../assets/icons/goBackToSelectedDayDisabled.png");
 
-export const DateBar = ({ resetDate }: DateBarProps) => {
+const DateBarComponent = ({ resetDate }: DateBarProps) => {
   const {
     selectedDay,
     selectedWeek,
@@ -27,25 +28,29 @@ export const DateBar = ({ resetDate }: DateBarProps) => {
     isGoBackDisabled,
   } = useDateBar({ resetDate });
 
+  const dayCircles = useMemo(
+    () =>
+      selectedWeek.map((day) => (
+        <TouchableOpacity
+          key={day.name}
+          style={getDayStyle(day.date)}
+          onPress={() => handleDayPress(day.date)}
+          disabled={day.date.hasSame(selectedDay, "day")}
+        >
+          <Text style={getDayLabelStyle(day.date).name}>{day.name.slice(0, 1)}</Text>
+          <Text style={getDayLabelStyle(day.date).number}>{day.date.toFormat("dd")}</Text>
+        </TouchableOpacity>
+      )),
+    [selectedWeek, selectedDay, getDayStyle, getDayLabelStyle, handleDayPress]
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.dateRow}>
         <TouchableOpacity onPress={handlePreviousWeek}>
           <Image source={goLeftIcon} />
         </TouchableOpacity>
-        <View style={styles.dayCirclesContainer}>
-          {selectedWeek.map((day) => (
-            <TouchableOpacity
-              key={day.name}
-              style={getDayStyle(day.date)}
-              onPress={() => handleDayPress(day.date)}
-              disabled={day.date.hasSame(selectedDay, "day")}
-            >
-              <Text style={getDayLabelStyle(day.date).name}>{day.name.slice(0, 1)}</Text>
-              <Text style={getDayLabelStyle(day.date).number}>{day.date.toFormat("dd")}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <View style={styles.dayCirclesContainer}>{dayCircles}</View>
         <TouchableOpacity onPress={handleNextWeek}>
           <Image source={goRightIcon} />
         </TouchableOpacity>
@@ -65,3 +70,5 @@ export const DateBar = ({ resetDate }: DateBarProps) => {
     </View>
   );
 };
+
+export const DateBar = memo(DateBarComponent);

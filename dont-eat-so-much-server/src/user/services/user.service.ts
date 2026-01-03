@@ -98,4 +98,22 @@ export class UserService {
     const { user } = await this.findByEmail(email);
     return !!user;
   }
+
+  async findByIdWithPassword(
+    userId: string,
+  ): Promise<{ user: User | undefined; userPassword: string | undefined }> {
+    const [userWithPassword] = await this.db
+      .select(userWithPasswordReturn)
+      .from(schema.users)
+      .where(eq(schema.users.userId, userId))
+      .limit(1);
+
+    if (!userWithPassword) {
+      return { user: undefined, userPassword: undefined };
+    }
+
+    const { password, ...user } = userWithPassword ?? {};
+
+    return { user, userPassword: password };
+  }
 }

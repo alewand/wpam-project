@@ -15,12 +15,17 @@ import { ScannerScreen } from "../screens/ScannerScreen/ScannerScreen";
 import { ConsumedMealScreen } from "../screens/ConsumedMealScreen/ConsumedMealScreen";
 import { SearchMealScreen } from "../screens/SearchMealScreen/SearchMealScreen";
 import { AddMealScreen } from "../screens/AddMealScreen/AddMealScreen";
+import { ProfileScreen } from "../screens/ProfileScreen/ProfileScreen";
 import { Meal } from "../store/meal/types";
+import { useTranslation } from "react-i18next";
+import { Image, View, Text } from "react-native";
+import { styles } from "./Navigation.styles";
 
 export type BottomTabParamList = {
   Meal: {
     resetDate?: boolean;
   };
+  Profile: undefined;
 };
 
 export type RootStackParamList = {
@@ -45,7 +50,12 @@ export type AppNavigation = NativeStackNavigationProp<RootStackParamList>;
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
+const mealsIcon = require("../assets/icons/mealIcon.png");
+const profileIcon = require("../assets/icons/profileIcon.png");
+
 const BottomTabNavigator = () => {
+  const { t } = useTranslation("common");
+
   return (
     <BottomTab.Navigator
       initialRouteName="Meal"
@@ -54,15 +64,63 @@ const BottomTabNavigator = () => {
         tabBarStyle: {
           backgroundColor: MAIN_COLOR,
           height: 60,
+          borderTopWidth: 0,
         },
         tabBarActiveTintColor: WHITE,
         tabBarInactiveTintColor: BACKGROUND_COLOR,
-        tabBarLabelStyle: {
-          fontSize: 14,
+        tabBarItemStyle: {
+          paddingBottom: 4,
         },
       }}
     >
-      <BottomTab.Screen name="Meal" component={MealScreen} />
+      <BottomTab.Screen
+        name="Meal"
+        component={MealScreen}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <View style={styles.tabBarLabelContainer}>
+              <Text
+                style={[
+                  styles.tabBarLabelText,
+                  focused ? styles.tabBarLabelTextActive : styles.tabBarLabelTextInactive,
+                ]}
+              >
+                {t("bottomTabs.meals")}
+              </Text>
+              {focused && <View style={styles.tabBarLabelUnderline} />}
+            </View>
+          ),
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.tabBarIconContainer}>
+              <Image source={mealsIcon} style={[styles.tabBarIcon, { tintColor: color }]} />
+            </View>
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <View style={styles.tabBarLabelContainer}>
+              <Text
+                style={[
+                  styles.tabBarLabelText,
+                  focused ? styles.tabBarLabelTextActive : styles.tabBarLabelTextInactive,
+                ]}
+              >
+                {t("bottomTabs.profile")}
+              </Text>
+              {focused && <View style={styles.tabBarLabelUnderline} />}
+            </View>
+          ),
+          tabBarIcon: ({ focused, color }) => (
+            <View style={styles.tabBarIconContainer}>
+              <Image source={profileIcon} style={[styles.tabBarIcon, { tintColor: color }]} />
+            </View>
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 };
