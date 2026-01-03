@@ -26,6 +26,15 @@ export const getErrorType = (queryError?: FetchBaseQueryError | SerializedError)
   return "";
 };
 
+export const getTranslatedError = (
+  error?: FetchBaseQueryError | SerializedError,
+  t?: TFunction<"errors", undefined>
+): string | undefined => {
+  if (!error || !t) return undefined;
+  const errorType = getErrorType(error);
+  return t(ApiErrorsTranslationMap[errorType] || "errors:unknownError");
+};
+
 export const setTranslatedError = (
   isError: boolean,
   t: TFunction<"errors", undefined>,

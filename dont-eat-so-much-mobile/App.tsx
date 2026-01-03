@@ -6,6 +6,7 @@ import { SnackbarProvider } from "./src/components/Snackbar/Snackbar";
 import { persistor, store } from "./src/store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
+import { PaperProvider } from "react-native-paper";
 
 export default function App() {
   const isDarkMode = useColorScheme() === "dark";
@@ -14,10 +15,12 @@ export default function App() {
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <SnackbarProvider>
-            <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-            <Navigation />
-          </SnackbarProvider>
+          <PaperProvider>
+            <SnackbarProvider>
+              <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
+              <Navigation />
+            </SnackbarProvider>
+          </PaperProvider>
         </PersistGate>
       </Provider>
     </SafeAreaProvider>

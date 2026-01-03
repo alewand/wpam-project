@@ -1,4 +1,4 @@
-import { Image, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, ImageSourcePropType, TextInput, TouchableOpacity, View } from "react-native";
 import { getStyles } from "./FormField.styles";
 import { useSnackbar } from "../Snackbar/Snackbar";
 import { useCallback, useMemo, useState } from "react";
@@ -9,7 +9,7 @@ export interface FormFieldProps {
   onChangeText: (text: string) => void;
   onBlur?: (e: any) => void;
   placeholder?: string;
-  iconSource?: any;
+  iconSource?: ImageSourcePropType;
   error?: string;
   touched?: boolean;
   isPassword?: boolean;

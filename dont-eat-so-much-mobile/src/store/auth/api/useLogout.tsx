@@ -1,21 +1,32 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { setTranslatedError } from "../../helpers";
+import { getErrorType } from "../../helpers";
 import { useLogoutMutation } from "../api";
+import { useSnackbar } from "../../../components/Snackbar/Snackbar";
+import { ApiErrorsTranslationMap } from "../../../constants/errors";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
+import { useAppSelector } from "../../store";
+import { selectRefreshToken } from "../selectors";
 
 export const useLogout = () => {
-  const [logoutMutation, { isLoading, isSuccess, isError, error }] = useLogoutMutation();
+  const [logoutMutation, { isLoading }] = useLogoutMutation();
   const { t } = useTranslation("errors");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { publish } = useSnackbar();
+  const refreshToken = useAppSelector(selectRefreshToken);
 
-  useEffect(() => {
-    setTranslatedError(isError, t, setErrorMessage, error);
-  }, [isError, error, t]);
+  const logout = useCallback(async () => {
+    if (!refreshToken) {
+      return;
+    }
+    try {
+      await logoutMutation({ refreshToken }).unwrap();
+    } catch (error) {
+      const errorType = getErrorType(error as FetchBaseQueryError | SerializedError);
+      const translatedMessage = t(ApiErrorsTranslationMap[errorType] || "unknownError");
+      publish(translatedMessage);
+    }
+  }, [logoutMutation, refreshToken, t, publish]);
 
-  const logout = useCallback(() => {
-    setErrorMessage("");
-    return logoutMutation();
-  }, [logoutMutation]);
-
-  return { logout, isLoading, isError, isSuccess, error: errorMessage };
+  return { logout, isLoading };
 };

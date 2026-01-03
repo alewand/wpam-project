@@ -4,8 +4,10 @@ import { persistStore } from "redux-persist";
 
 import authReducer from "./auth/slice";
 import dateReducer from "./date/slice";
+import userLimitsReducer from "./user/slice";
 import { authApi } from "./auth/api";
 import { mealApi } from "./meal/api";
+import { userApi } from "./user/api";
 
 export const store = configureStore({
   reducer: {
@@ -13,13 +15,15 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     date: dateReducer,
     [mealApi.reducerPath]: mealApi.reducer,
+    userLimits: userLimitsReducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
-    }).concat(authApi.middleware, mealApi.middleware),
+    }).concat(authApi.middleware, mealApi.middleware, userApi.middleware),
 });
 
 export const persistor = persistStore(store);

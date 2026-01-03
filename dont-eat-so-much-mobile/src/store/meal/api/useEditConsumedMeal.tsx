@@ -6,6 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 import { AppNavigation } from "../../../navigation/Navigation";
 import { useAppSelector } from "../../store";
 import { selectSelectedDay } from "../../date/selectors";
+import { getErrorType } from "../../helpers";
+import { ApiErrorsTranslationMap } from "../../../constants/errors";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
 export const useEditConsumedMeal = () => {
   const navigation = useNavigation<AppNavigation>();
@@ -35,8 +39,10 @@ export const useEditConsumedMeal = () => {
       try {
         await editConsumedMealMutation(consumedMealToEdit).unwrap();
         publish(tMeal("editMealSuccess"));
-      } catch {
-        publish(t("unknownError"));
+      } catch (error) {
+        const errorType = getErrorType(error as FetchBaseQueryError | SerializedError);
+        const translatedMessage = t(ApiErrorsTranslationMap[errorType] || "unknownError");
+        publish(translatedMessage);
       } finally {
         navigateToMeal();
       }

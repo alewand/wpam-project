@@ -10,6 +10,8 @@ export const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 70,
     borderRadius: 12,
+    elevation: 1000,
+    zIndex: 1000,
   },
   message: {
     color: BACKGROUND_COLOR,

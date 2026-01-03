@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
@@ -6,7 +6,6 @@ import { styles } from "./MealScreen.styles";
 import { DateBar } from "../../components/DateBar/DateBar";
 import { FlashList } from "@shopify/flash-list";
 import { useMealScreen } from "./hooks/useMealScreen";
-import { ActivityIndicator } from "react-native-paper";
 import { useCallback } from "react";
 import { MAIN_COLOR } from "../../constants/colors";
 import { MealCard } from "../../components/MealCard/MealCard";

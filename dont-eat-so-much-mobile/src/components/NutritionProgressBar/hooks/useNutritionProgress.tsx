@@ -2,16 +2,19 @@ import { useMemo } from "react";
 import { useGetConsumedMeals } from "../../../store/meal/api/useGetConsumedMeals";
 import type { Meal } from "../../../store/meal/types";
 import { calculateNutritionValue } from "../../../hooks/helpers";
-
-const CALORIE_LIMIT = 10000;
-const PROTEIN_LIMIT = 1000;
-const CARBS_LIMIT = 1000;
-const FAT_LIMIT = 1000;
-const SATURATED_FAT_LIMIT = 1000;
-const SUGARS_LIMIT = 1000;
-const FIBER_LIMIT = 1000;
-const SALT_LIMIT = 1000;
-const SODIUM_LIMIT = 1000;
+import { useAppSelector } from "../../../store/store";
+import {
+  selectDailyCaloriesLimit,
+  selectDailyProteinLimit,
+  selectDailyFatLimit,
+  selectDailyCarbohydratesLimit,
+} from "../../../store/user/selectors";
+import {
+  DEFAULT_DAILY_CALORIES_LIMIT,
+  DEFAULT_DAILY_PROTEIN_LIMIT,
+  DEFAULT_DAILY_FAT_LIMIT,
+  DEFAULT_DAILY_CARBOHYDRATES_LIMIT,
+} from "../../../constants/constants";
 
 const calculateNutritions = (grams: number, meal: Meal) => {
   return {
@@ -50,6 +53,15 @@ export interface NutritionProgress {
 
 export const useNutritionProgress = (): NutritionProgress => {
   const { consumedMeals } = useGetConsumedMeals();
+  const dailyCaloriesLimit = useAppSelector(selectDailyCaloriesLimit);
+  const dailyProteinLimit = useAppSelector(selectDailyProteinLimit);
+  const dailyFatLimit = useAppSelector(selectDailyFatLimit);
+  const dailyCarbohydratesLimit = useAppSelector(selectDailyCarbohydratesLimit);
+
+  const CALORIE_LIMIT = dailyCaloriesLimit ?? DEFAULT_DAILY_CALORIES_LIMIT;
+  const PROTEIN_LIMIT = dailyProteinLimit ?? DEFAULT_DAILY_PROTEIN_LIMIT;
+  const CARBS_LIMIT = dailyCarbohydratesLimit ?? DEFAULT_DAILY_CARBOHYDRATES_LIMIT;
+  const FAT_LIMIT = dailyFatLimit ?? DEFAULT_DAILY_FAT_LIMIT;
 
   const totals = useMemo(() => {
     let totalCalories = 0;
@@ -117,36 +129,36 @@ export const useNutritionProgress = (): NutritionProgress => {
       },
       saturatedFat: {
         current: totals.saturatedFat,
-        limit: SATURATED_FAT_LIMIT,
-        progress: Math.min(totals.saturatedFat / SATURATED_FAT_LIMIT, 1),
-        isExceeded: totals.saturatedFat > SATURATED_FAT_LIMIT,
+        limit: 0,
+        progress: 1,
+        isExceeded: false,
       },
       sugars: {
         current: totals.sugars,
-        limit: SUGARS_LIMIT,
-        progress: Math.min(totals.sugars / SUGARS_LIMIT, 1),
-        isExceeded: totals.sugars > SUGARS_LIMIT,
+        limit: 0,
+        progress: 1,
+        isExceeded: false,
       },
       fiber: {
         current: totals.fiber,
-        limit: FIBER_LIMIT,
-        progress: Math.min(totals.fiber / FIBER_LIMIT, 1),
-        isExceeded: totals.fiber > FIBER_LIMIT,
+        limit: 0,
+        progress: 1,
+        isExceeded: false,
       },
       salt: {
         current: totals.salt,
-        limit: SALT_LIMIT,
-        progress: Math.min(totals.salt / SALT_LIMIT, 1),
-        isExceeded: totals.salt > SALT_LIMIT,
+        limit: 0,
+        progress: 1,
+        isExceeded: false,
       },
       sodium: {
         current: totals.sodium,
-        limit: SODIUM_LIMIT,
-        progress: Math.min(totals.sodium / SODIUM_LIMIT, 1),
-        isExceeded: totals.sodium > SODIUM_LIMIT,
+        limit: 0,
+        progress: 1,
+        isExceeded: false,
       },
     }),
-    [totals]
+    [totals, CALORIE_LIMIT, PROTEIN_LIMIT, CARBS_LIMIT, FAT_LIMIT]
   );
 
   return progress;

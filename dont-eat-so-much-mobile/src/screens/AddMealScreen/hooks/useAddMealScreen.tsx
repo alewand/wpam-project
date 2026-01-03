@@ -1,12 +1,12 @@
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigation } from "../../../navigation/Navigation";
-import { useAddCustomMeal } from "../../../store/meal/api/useAddCustomMeal";
+import { useCreateMeal } from "../../../store/meal/api/useAddCustomMeal";
 import type { CreateMealRequest } from "../../../store/meal/types";
 
 export const useAddMealScreen = () => {
   const navigation = useNavigation<AppNavigation>();
-  const { createMeal, isLoading } = useAddCustomMeal();
+  const { createMeal, isLoading } = useCreateMeal();
 
   const handleSubmit = useCallback(
     async (values: CreateMealRequest) => {

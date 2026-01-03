@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Query,
   UseGuards,
@@ -33,18 +34,16 @@ export class MealsController {
   @UseGuards(AuthGuard)
   async searchMealsV1(
     @Query("q") query: string,
-    @Query("page") page?: string,
-    @Query("limit") limit?: string,
+    @Query("page", new ParseIntPipe({ optional: true })) page?: number,
+    @Query("limit", new ParseIntPipe({ optional: true })) limit?: number,
     @Query("onlyMyMeals") onlyMyMeals?: string,
     @CurrentUser() user?: AuthUserPayload,
   ) {
-    const pageNumber = page ? parseInt(page, 10) : undefined;
-    const limitNumber = limit ? parseInt(limit, 10) : undefined;
     const onlyMyMealsBool = onlyMyMeals === "true";
     return this.mealsApiService.searchMeals(
       query || "",
-      pageNumber,
-      limitNumber,
+      page,
+      limit,
       onlyMyMealsBool ? user?.userId : undefined,
     );
   }

@@ -59,6 +59,10 @@
     "password": "Password",
     "confirmPassword": "Confirm Password"
   },
+  "bottomTabs": {
+    "meals": "Meals",
+    "profile": "Profile"
+  },
   "meal": {
     "proteinShort": "P.",
     "carbsShort": "C.",
@@ -116,5 +120,62 @@
       "fatInvalid": "Fat must be between 0 and 100",
       "carbohydratesInvalid": "Carbohydrates must be between 0 and 100"
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "userData": {
+      "title": "User Data",
+      "name": "Name",
+      "email": "Email"
+    },
+    "updateName": {
+      "title": "Change Name",
+      "name": "Name",
+      "namePlaceholder": "Enter name",
+      "saveButton": "Save"
+    },
+    "updateEmail": {
+      "title": "Change Email",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "password": "Current Password",
+      "passwordPlaceholder": "Enter current password",
+      "saveButton": "Save",
+      "success": "Email changed successfully"
+    },
+    "updatePassword": {
+      "title": "Change Password",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "password": "Current Password",
+      "passwordPlaceholder": "Enter current password",
+      "saveButton": "Save",
+      "success": "Password changed successfully"
+    },
+    "limits": {
+      "title": "Daily Limits",
+      "calories": "Calories (kcal)",
+      "caloriesPlaceholder": "Enter calories limit",
+      "protein": "Protein (g)",
+      "proteinPlaceholder": "Enter protein limit",
+      "fat": "Fat (g)",
+      "fatPlaceholder": "Enter fat limit",
+      "carbohydrates": "Carbohydrates (g)",
+      "carbohydratesPlaceholder": "Enter carbohydrates limit",
+      "saveButton": "Save Limits",
+      "saveSuccess": "Limits saved successfully",
+      "saveError": "Invalid limit values. Please enter valid numbers."
+    },
+    "logout": "Logout",
+    "logoutFromAllDevices": "Logout from all devices",
+    "deleteAccount": {
+      "title": "Delete Account",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password to confirm",
+      "deleteButton": "Delete Account",
+      "confirmMessage": "Are you sure you want to delete your account? Confirm it with your password.",
+      "success": "Account deleted successfully"
+    },
+    "cancel": "Cancel"
   }
 }

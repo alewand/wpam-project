@@ -20,8 +20,8 @@ import { useRegister } from "../../store/auth/api/useRegister";
 import { AppNavigation } from "../../navigation/Navigation";
 import { Header } from "../../components/Header/Header";
 import { getFormButtonColor, isFormButtonDisabled } from "./helpers";
-import { useDisplayError } from "../../hooks/useDisplayError";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator } from "react-native";
+import { WHITE } from "../../constants/colors";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(3, "name.tooShort").max(20, "name.tooLong").required("name.required"),
@@ -49,11 +49,9 @@ export interface RegisterFormValues extends RegisterRequest {
 }
 
 export const RegisterScreen = () => {
-  const { register, isLoading, isSuccess, isError, error } = useRegister();
+  const { register, isLoading, isSuccess } = useRegister();
   const navigation = useNavigation<AppNavigation>();
   const { t } = useTranslation();
-
-  useDisplayError({ isError, error });
 
   const navigateToWelcome = useCallback(() => {
     navigation.navigate("Welcome");
@@ -77,7 +75,7 @@ export const RegisterScreen = () => {
     <SafeAreaView style={styles.container}>
       <Header onGoBack={navigateToWelcome} />
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
+        style={styles.keyboardView}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
@@ -145,7 +143,7 @@ export const RegisterScreen = () => {
                     disabled={isFormButtonDisabled(isLoading, values, errors)}
                   >
                     {isLoading ? (
-                      <ActivityIndicator size="small" color="#FFFFFF" />
+                      <ActivityIndicator size="small" color={WHITE} />
                     ) : (
                       <Text style={styles.registerButtonText}>{t("common:register:button")}</Text>
                     )}

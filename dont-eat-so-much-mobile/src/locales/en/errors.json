@@ -4,6 +4,7 @@
   "mealNotFound": "Meal with the given barcode was not found.",
   "networkError": "A network error occurred. Please check your internet connection and try again.",
   "barcodeAlreadyExists": "A meal with this barcode already exists. You cannot add it again.",
+  "userAlreadyExists": "A user with this email already exists. Please use a different email address.",
   "validation": {
     "name": {
       "required": "Name is required."
