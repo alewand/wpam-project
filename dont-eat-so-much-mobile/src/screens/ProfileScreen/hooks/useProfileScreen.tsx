@@ -12,6 +12,7 @@ import { useLogout } from "../../../store/auth/api/useLogout";
 import { useLogoutFromAllDevices } from "../../../store/auth/api/useLogoutFromAllDevices";
 import { useSnackbar } from "../../../components/Snackbar/Snackbar";
 import { useTranslation } from "react-i18next";
+import i18n from "../../../utils/i18n";
 import {
   setDailyCaloriesLimit,
   setDailyProteinLimit,
@@ -186,6 +187,10 @@ export const useProfileScreen = () => {
     }
   }, [dailyCaloriesLimit, dailyProteinLimit, dailyFatLimit, dailyCarbohydratesLimit, publish, t]);
 
+  const handleChangeLanguage = useCallback((language: "pl" | "en") => {
+    i18n.changeLanguage(language);
+  }, []);
+
   return {
     userProfile,
     isUpdatingName,
@@ -221,5 +226,6 @@ export const useProfileScreen = () => {
     handleSetDailyFatLimit,
     handleSetDailyCarbohydratesLimit,
     handleSaveLimits,
+    handleChangeLanguage,
   };
 };

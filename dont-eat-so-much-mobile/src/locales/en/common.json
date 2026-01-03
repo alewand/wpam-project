@@ -166,6 +166,11 @@
       "saveSuccess": "Limits saved successfully",
       "saveError": "Invalid limit values. Please enter valid numbers."
     },
+    "language": {
+      "title": "Language",
+      "polish": "Polski",
+      "english": "English"
+    },
     "logout": "Logout",
     "logoutFromAllDevices": "Logout from all devices",
     "deleteAccount": {

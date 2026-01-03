@@ -121,4 +121,31 @@ export const styles = StyleSheet.create({
   saveLimitsButton: {
     marginTop: 16,
   },
+  languageContainer: {
+    backgroundColor: WHITE,
+    borderRadius: 12,
+    padding: 8,
+    flexDirection: "row",
+    gap: 8,
+  },
+  languageButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  languageButtonActive: {
+    backgroundColor: MAIN_COLOR,
+  },
+  languageButtonText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: TEXT_COLOR,
+  },
+  languageButtonTextActive: {
+    color: WHITE,
+  },
 });

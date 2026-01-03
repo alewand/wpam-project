@@ -166,6 +166,11 @@
       "saveSuccess": "Limity zostały zapisane pomyślnie",
       "saveError": "Nieprawidłowe wartości limitów. Wprowadź poprawne liczby."
     },
+    "language": {
+      "title": "Język",
+      "polish": "Polski",
+      "english": "English"
+    },
     "logout": "Wyloguj się",
     "logoutFromAllDevices": "Wyloguj się ze wszystkich urządzeń",
     "deleteAccount": {

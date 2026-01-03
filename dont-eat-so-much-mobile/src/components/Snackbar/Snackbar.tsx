@@ -18,9 +18,11 @@ export const useSnackbar = () => {
 export const SnackbarProvider = ({ children }: { children: React.ReactNode }) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState("");
+  const [snackbarKey, setSnackbarKey] = useState(0);
 
   const publish = (message: string) => {
     setMessage(message);
+    setSnackbarKey((prev) => prev + 1);
     setVisible(true);
   };
 
@@ -29,6 +31,7 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
       {children}
       <Portal>
         <Snackbar
+          key={snackbarKey}
           visible={visible}
           onDismiss={() => setVisible(false)}
           duration={2000}
