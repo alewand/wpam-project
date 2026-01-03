@@ -25,7 +25,7 @@ import { DeleteAccountModal } from "./components/DeleteAccountModal";
 const editIcon = require("../../assets/icons/editIcon.png");
 
 export const ProfileScreen = () => {
-  const { t } = useTranslation("common", { keyPrefix: "profile" });
+  const { t, i18n: i18nInstance } = useTranslation("common", { keyPrefix: "profile" });
   const {
     isUpdatingName,
     isUpdatingEmail,
@@ -60,6 +60,7 @@ export const ProfileScreen = () => {
     handleSetDailyFatLimit,
     handleSetDailyCarbohydratesLimit,
     handleSaveLimits,
+    handleChangeLanguage,
   } = useProfileScreen();
 
   const name = useAppSelector(selectName);
@@ -189,6 +190,44 @@ export const ProfileScreen = () => {
             >
               <Text style={styles.buttonText}>{t("limits.saveButton")}</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t("language.title")}</Text>
+            <View style={styles.languageContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.languageButton,
+                  i18nInstance.language === "pl" && styles.languageButtonActive,
+                ]}
+                onPress={() => handleChangeLanguage("pl")}
+              >
+                <Text
+                  style={[
+                    styles.languageButtonText,
+                    i18nInstance.language === "pl" && styles.languageButtonTextActive,
+                  ]}
+                >
+                  {t("language.polish")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.languageButton,
+                  i18nInstance.language === "en" && styles.languageButtonActive,
+                ]}
+                onPress={() => handleChangeLanguage("en")}
+              >
+                <Text
+                  style={[
+                    styles.languageButtonText,
+                    i18nInstance.language === "en" && styles.languageButtonTextActive,
+                  ]}
+                >
+                  {t("language.english")}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.section}>

@@ -1,17 +1,12 @@
 import { DateTime } from "luxon";
 import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../../store/store";
-import {
-  selectCurrentDay,
-  selectSelectedDay,
-  selectSelectedMonth,
-  selectSelectedWeek,
-  selectSelectedYear,
-} from "../../../store/date/selectors";
+import { selectCurrentDay, selectSelectedDay } from "../../../store/date/selectors";
 import { Day } from "../../../store/date/types";
 import { styles } from "../DateBar.styles";
 import { setNextWeek, setPreviousWeek, setSelectedDay } from "../../../store/date/slice";
-import { getCurrentDay } from "../../../store/date/helpers";
+import { getCurrentDay, isDayInWeek } from "../../../store/date/helpers";
 
 export interface UseDateBarProps {
   resetDate?: boolean;
@@ -19,12 +14,40 @@ export interface UseDateBarProps {
 
 export const useDateBar = ({ resetDate }: UseDateBarProps) => {
   const dispatch = useAppDispatch();
+  const { i18n } = useTranslation();
 
   const selectedDay = useAppSelector(selectSelectedDay);
   const currentDay = useAppSelector(selectCurrentDay);
-  const selectedWeek: Day[] = useAppSelector(selectSelectedWeek);
-  const selectedMonth = useAppSelector(selectSelectedMonth);
-  const selectedYear = useAppSelector(selectSelectedYear);
+  const selectedWeekRaw = useAppSelector((state) => state.date.selectedWeek);
+  const selectedDayRaw = useAppSelector((state) => state.date.selectedDay);
+
+  const selectedWeek: Day[] = useMemo(() => {
+    return selectedWeekRaw.map((dateIso) => {
+      const date = DateTime.fromISO(dateIso).setLocale(i18n.language);
+      return {
+        name: date.toFormat("cccc").toUpperCase(),
+        date,
+      };
+    });
+  }, [selectedWeekRaw, i18n.language]);
+
+  const selectedMonth = useMemo(() => {
+    if (isDayInWeek(selectedDayRaw, selectedWeekRaw)) {
+      const date = DateTime.fromISO(selectedDayRaw).setLocale(i18n.language);
+      return date.toFormat("LLLL").toUpperCase();
+    }
+    const date = DateTime.fromISO(selectedWeekRaw[0]).setLocale(i18n.language);
+    return date.toFormat("LLLL").toUpperCase();
+  }, [selectedDayRaw, selectedWeekRaw, i18n.language]);
+
+  const selectedYear = useMemo(() => {
+    if (isDayInWeek(selectedDayRaw, selectedWeekRaw)) {
+      const date = DateTime.fromISO(selectedDayRaw);
+      return date.year;
+    }
+    const date = DateTime.fromISO(selectedWeekRaw[0]);
+    return date.year;
+  }, [selectedDayRaw, selectedWeekRaw]);
 
   const shouldDateBeReseted = useRef<boolean>(resetDate ?? false);
 
