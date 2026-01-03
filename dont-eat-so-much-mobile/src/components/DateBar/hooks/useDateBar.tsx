@@ -80,7 +80,7 @@ export const useDateBar = ({ resetDate }: UseDateBarProps) => {
       handleGoBackToSelectedDay();
       shouldDateBeReseted.current = false;
     }
-  }, [handleGoBackToSelectedDay, shouldDateBeReseted.current]);
+  }, [handleGoBackToSelectedDay, shouldDateBeReseted]);
 
   return {
     selectedDay,

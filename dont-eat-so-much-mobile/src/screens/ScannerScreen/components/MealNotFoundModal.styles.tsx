@@ -2,9 +2,9 @@ import { StyleSheet } from "react-native";
 import {
   SECONDARY_COLOR,
   TEXT_COLOR,
-  SECOND_TEXT_COLOR,
   WHITE,
   BLACK,
+  BACKDROP_COLOR,
 } from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     padding: 24,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.55)",
+    backgroundColor: BACKDROP_COLOR,
   },
   card: {
     width: "100%",

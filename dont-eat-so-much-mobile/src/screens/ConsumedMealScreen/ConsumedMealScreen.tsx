@@ -17,7 +17,6 @@ import { ActivityIndicator } from "react-native-paper";
 import { WHITE } from "../../constants/colors";
 import { DateBar } from "../../components/DateBar/DateBar";
 import { useHardwareBackHandler } from "../../hooks/useHardwareBackHandler";
-import { NutritionProgressBar } from "../../components/NutritionProgressBar/NutritionProgressBar";
 
 export const ConsumedMealScreen = () => {
   const {
@@ -51,7 +50,6 @@ export const ConsumedMealScreen = () => {
             {actionType !== "view" && <DateBar />}
           </View>
           <View style={styles.contentContainer}>
-            <NutritionProgressBar />
             <View style={styles.mealInfoCard}>
               {mealImageUrl && <Image source={{ uri: mealImageUrl }} style={styles.mealImage} />}
               <Text style={styles.mealName}>{mealName}</Text>

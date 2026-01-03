@@ -25,10 +25,11 @@ export const ScannerScreen = () => {
     handleGoBack,
     isMealNotFoundModalVisible,
     handleCloseMealNotFoundModal,
+    handleOpenManualBarcodeInputModal,
+    handleCloseManualBarcodeInputModal,
     isLoading,
     barcode,
     isManualBarcodeInputModalVisible,
-    setIsManualBarcodeInputModalVisible,
     handleManualBarcodeInput,
   } = useBarcodeScanner();
 
@@ -85,7 +86,9 @@ export const ScannerScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {!isLoading && !isMealNotFoundModalVisible && <View style={styles.frame} />}
+          {!isLoading && !isMealNotFoundModalVisible && !isManualBarcodeInputModalVisible && (
+            <View style={styles.frame} />
+          )}
 
           <View style={styles.bottomSection}>
             <View style={styles.textBackground}>
@@ -94,7 +97,7 @@ export const ScannerScreen = () => {
 
             <TouchableOpacity
               style={styles.manualInputButton}
-              onPress={() => setIsManualBarcodeInputModalVisible(true)}
+              onPress={handleOpenManualBarcodeInputModal}
             >
               <Text style={styles.manualInputButtonText}>{t("scanner.manualInputButton")}</Text>
             </TouchableOpacity>
@@ -111,17 +114,19 @@ export const ScannerScreen = () => {
 
       {isMealNotFoundModalVisible && (
         <MealNotFoundModal
-          barcode={barcode}
-          isMealNotFoundModalVisible={isMealNotFoundModalVisible}
+          isVisible={isMealNotFoundModalVisible}
           onClose={handleCloseMealNotFoundModal}
+          barcode={barcode}
         />
       )}
 
-      <ManualBarcodeInputModal
-        isVisible={isManualBarcodeInputModalVisible}
-        onClose={() => setIsManualBarcodeInputModalVisible(false)}
-        onConfirm={handleManualBarcodeInput}
-      />
+      {isManualBarcodeInputModalVisible && (
+        <ManualBarcodeInputModal
+          isVisible={isManualBarcodeInputModalVisible}
+          onClose={handleCloseManualBarcodeInputModal}
+          onConfirm={handleManualBarcodeInput}
+        />
+      )}
     </>
   );
 };

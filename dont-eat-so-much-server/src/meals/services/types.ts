@@ -47,3 +47,11 @@ export const mealReturn = {
   sodiumPer100g: meals.sodiumPer100g,
   imageUrl: meals.imageUrl,
 };
+
+export interface SearchMealsResponse {
+  meals: Meal[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}

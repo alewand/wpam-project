@@ -1,11 +1,21 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DRIZZLE } from "src/drizzle/drizzle.module";
 import { type DrizzleDatabase } from "src/drizzle/types";
-import { eq, inArray } from "drizzle-orm";
+import { eq, inArray, or, ilike, count, and } from "drizzle-orm";
 import * as schema from "src/drizzle/schema";
 import { DateTime } from "luxon";
-import { REFRESH_PRODUCTS_WITH_BARCODE_DAYS } from "src/constants/constants";
-import { Meal, mealReturn, NewMeal, RawMeal } from "./types";
+import {
+  REFRESH_PRODUCTS_WITH_BARCODE_DAYS,
+  SEARCH_MEALS_DEFAULT_PAGE,
+  SEARCH_MEALS_DEFAULT_LIMIT,
+} from "src/constants/constants";
+import {
+  Meal,
+  mealReturn,
+  NewMeal,
+  RawMeal,
+  SearchMealsResponse,
+} from "./types";
 
 @Injectable()
 export class MealsService {
@@ -57,18 +67,62 @@ export class MealsService {
     return meal ?? null;
   }
 
-  // async getLatestByUser(userId: string, page: number): Promise<Meal[]> {
-  //   const pageSize = 10;
-  //   const offset = (page - 1) * pageSize;
+  async searchMeals(
+    query: string,
+    page: number = SEARCH_MEALS_DEFAULT_PAGE,
+    limit: number = SEARCH_MEALS_DEFAULT_LIMIT,
+    userId?: string,
+  ): Promise<SearchMealsResponse> {
+    const trimmedQuery = query.trim();
 
-  //   return this.db
-  //     .select(mealReturn)
-  //     .from(schema.meals)
-  //     .where(eq(schema.meals.addedBy, userId))
-  //     .orderBy(desc(schema.meals.createdAt))
-  //     .limit(pageSize)
-  //     .offset(offset);
-  // }
+    const searchCondition = trimmedQuery
+      ? or(
+          ilike(schema.meals.name, `%${trimmedQuery}%`),
+          ilike(schema.meals.brand, `%${trimmedQuery}%`),
+          eq(schema.meals.barcode, trimmedQuery),
+        )
+      : undefined;
+
+    const userCondition = userId ? eq(schema.meals.addedBy, userId) : undefined;
+
+    const whereCondition =
+      searchCondition && userCondition
+        ? and(searchCondition, userCondition)
+        : searchCondition || userCondition;
+
+    const countQuery = this.db.select({ count: count() }).from(schema.meals);
+
+    if (whereCondition) {
+      countQuery.where(whereCondition);
+    }
+
+    const [totalResult] = await countQuery;
+    const total = totalResult?.count ?? 0;
+    const totalPages = Math.ceil(total / limit);
+
+    const validPage = Math.max(1, Math.min(page, totalPages || 1));
+    const offset = (validPage - 1) * limit;
+
+    const mealsQuery = this.db
+      .select(mealReturn)
+      .from(schema.meals)
+      .limit(limit)
+      .offset(offset);
+
+    if (whereCondition) {
+      mealsQuery.where(whereCondition);
+    }
+
+    const meals = await mealsQuery;
+
+    return {
+      meals,
+      total,
+      page: validPage,
+      limit,
+      totalPages,
+    };
+  }
 
   shouldMealBeRefreshed(
     meal: RawMeal,

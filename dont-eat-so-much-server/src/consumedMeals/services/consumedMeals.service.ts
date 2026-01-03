@@ -12,8 +12,8 @@ import * as schema from "src/drizzle/schema";
 import {
   ConsumedMeal,
   consumedMealReturn,
-  ConsumedMealWithMeal,
   NewConsumedMeal,
+  ConsumedMealWithMeal,
 } from "./types";
 import { DateTime } from "luxon";
 import { and, desc, eq } from "drizzle-orm";
@@ -112,15 +112,15 @@ export class ConsumedMealsService {
       throw new BadRequestException(ErrorType.INVALID_DATE_FORMAT);
     }
 
+    const whereCondition = and(
+      eq(schema.consumedMeals.consumedBy, userId),
+      eq(schema.consumedMeals.consumedAt, date),
+    );
+
     const consumedMeals: ConsumedMeal[] = await this.db
       .select(consumedMealReturn)
       .from(schema.consumedMeals)
-      .where(
-        and(
-          eq(schema.consumedMeals.consumedBy, userId),
-          eq(schema.consumedMeals.consumedAt, date),
-        ),
-      )
+      .where(whereCondition)
       .orderBy(desc(schema.consumedMeals.createdAt));
 
     const mealsIds = consumedMeals.map((consumedMeal) => consumedMeal.mealId);
@@ -128,9 +128,11 @@ export class ConsumedMealsService {
     const meals = await this.mealsService.getMealsByIds(mealsIds);
     const mealsMap = new Map(meals.map((meal) => [meal.mealId, meal]));
 
-    return consumedMeals.map((consumedMeal) => ({
+    const consumedMealsWithMeals = consumedMeals.map((consumedMeal) => ({
       ...consumedMeal,
       meal: mealsMap.get(consumedMeal.mealId)!,
     }));
+
+    return consumedMealsWithMeals;
   }
 }

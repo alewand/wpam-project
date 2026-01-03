@@ -3,11 +3,44 @@
   "invalidCredentials": "Nieprawidłowe dane logowania. Proszę spróbować ponownie.",
   "mealNotFound": "Posiłek o podanym kodzie kreskowym nie został znaleziony.",
   "networkError": "Wystąpił błąd połączenia. Sprawdź połączenie internetowe i spróbuj ponownie.",
+  "barcodeAlreadyExists": "Posiłek o tym kodzie kreskowym już istnieje. Nie możesz go dodać ponownie.",
   "validation": {
     "name": {
-      "required": "Imię jest wymagane.",
-      "tooShort": "Imię musi mieć co najmniej 3 znaki.",
-      "tooLong": "Imię może mieć maksymalnie 20 znaków."
+      "required": "Nazwa jest wymagana."
+    },
+    "barcode": {
+      "invalid": "Kod kreskowy musi mieć 8 lub 13 cyfr."
+    },
+    "energyKcal": {
+      "required": "Energia jest wymagana.",
+      "invalid": "Energia musi być między 0 a 9999."
+    },
+    "protein": {
+      "required": "Białko jest wymagane.",
+      "invalid": "Białko musi być między 0 a 100."
+    },
+    "fat": {
+      "required": "Tłuszcz jest wymagany.",
+      "invalid": "Tłuszcz musi być między 0 a 100."
+    },
+    "carbohydrates": {
+      "required": "Węglowodany są wymagane.",
+      "invalid": "Węglowodany muszą być między 0 a 100."
+    },
+    "saturatedFat": {
+      "invalid": "Tłuszcz nasycony musi być między 0 a 100."
+    },
+    "sugars": {
+      "invalid": "Cukry muszą być między 0 a 100."
+    },
+    "fiber": {
+      "invalid": "Błonnik musi być między 0 a 100."
+    },
+    "salt": {
+      "invalid": "Sól musi być między 0 a 100."
+    },
+    "sodium": {
+      "invalid": "Sód musi być między 0 a 100000."
     },
     "email": {
       "required": "Adres email jest wymagany.",

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles } from "./ManualBarcodeInputModal.styles";
-import { EAN13_LENGTH, isValidBarcodeLength } from "../../../constants/constants";
+import { EAN13_LENGTH } from "../../../constants/constants";
+import { isBarcodeValid } from "./helpers";
 
 interface ManualBarcodeInputModalProps {
   isVisible: boolean;
@@ -18,21 +19,19 @@ export const ManualBarcodeInputModal = ({
   const { t } = useTranslation("common", { keyPrefix: "scanner.manualInput" });
   const [barcode, setBarcode] = useState("");
 
-  const handleConfirm = () => {
-    const trimmedBarcode = barcode.trim();
-    if (isValidBarcodeLength(trimmedBarcode.length)) {
-      onConfirm(trimmedBarcode);
-      setBarcode("");
-      onClose();
-    }
-  };
+  const isValid = useMemo(() => isBarcodeValid(barcode), [barcode]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setBarcode("");
     onClose();
-  };
+  }, [onClose, setBarcode]);
 
-  const isValid = isValidBarcodeLength(barcode.trim().length);
+  const handleConfirm = useCallback(() => {
+    if (!isValid) return;
+
+    onConfirm(barcode);
+    handleClose();
+  }, [barcode, handleClose, isValid, onConfirm]);
 
   return (
     <Modal visible={isVisible} transparent animationType="fade" onRequestClose={handleClose}>

@@ -9,6 +9,14 @@ export type ConsumedMeal = Omit<
 >;
 export type ConsumedMealWithMeal = ConsumedMeal & { meal: Meal };
 
+export interface ConsumedMealsResponse {
+  consumedMeals: ConsumedMealWithMeal[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export const consumedMealReturn = {
   consumedMealId: consumedMeals.consumedMealId,
   mealId: consumedMeals.mealId,

@@ -3,11 +3,44 @@
   "invalidCredentials": "Invalid login credentials. Please try again.",
   "mealNotFound": "Meal with the given barcode was not found.",
   "networkError": "A network error occurred. Please check your internet connection and try again.",
+  "barcodeAlreadyExists": "A meal with this barcode already exists. You cannot add it again.",
   "validation": {
     "name": {
-      "required": "Name is required.",
-      "tooShort": "Name must be at least 3 characters long.",
-      "tooLong": "Name can be at most 20 characters long."
+      "required": "Name is required."
+    },
+    "barcode": {
+      "invalid": "Barcode must be 8 or 13 digits."
+    },
+    "energyKcal": {
+      "required": "Energy is required.",
+      "invalid": "Energy must be between 0 and 9999."
+    },
+    "protein": {
+      "required": "Protein is required.",
+      "invalid": "Protein must be between 0 and 100."
+    },
+    "fat": {
+      "required": "Fat is required.",
+      "invalid": "Fat must be between 0 and 100."
+    },
+    "carbohydrates": {
+      "required": "Carbohydrates are required.",
+      "invalid": "Carbohydrates must be between 0 and 100."
+    },
+    "saturatedFat": {
+      "invalid": "Saturated fat must be between 0 and 100."
+    },
+    "sugars": {
+      "invalid": "Sugars must be between 0 and 100."
+    },
+    "fiber": {
+      "invalid": "Fiber must be between 0 and 100."
+    },
+    "salt": {
+      "invalid": "Salt must be between 0 and 100."
+    },
+    "sodium": {
+      "invalid": "Sodium must be between 0 and 100000."
     },
     "email": {
       "required": "Email address is required.",

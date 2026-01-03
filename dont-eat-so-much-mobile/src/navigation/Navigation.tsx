@@ -13,6 +13,8 @@ import { useAppSelector } from "../store/store";
 import { selectIsAuthenticated } from "../store/auth/selectors";
 import { ScannerScreen } from "../screens/ScannerScreen/ScannerScreen";
 import { ConsumedMealScreen } from "../screens/ConsumedMealScreen/ConsumedMealScreen";
+import { SearchMealScreen } from "../screens/SearchMealScreen/SearchMealScreen";
+import { AddMealScreen } from "../screens/AddMealScreen/AddMealScreen";
 import { Meal } from "../store/meal/types";
 
 export type BottomTabParamList = {
@@ -27,11 +29,14 @@ export type RootStackParamList = {
   Login: undefined;
   Scanner: undefined;
   BottomTabs: NavigatorScreenParams<BottomTabParamList>;
+  SearchMeal: undefined;
+  AddMeal: undefined;
   ConsumedMeal: {
     meal: Meal;
     action: "add" | "edit" | "view";
     consumedMealId?: string;
     amountInGrams?: number;
+    source?: "SearchMeal" | "Meal" | "Scanner" | "AddMeal";
   };
 };
 
@@ -76,6 +81,8 @@ export const Navigation = () => {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Scanner" component={ScannerScreen} />
         <Stack.Screen name="BottomTabs" component={BottomTabNavigator} />
+        <Stack.Screen name="SearchMeal" component={SearchMealScreen} />
+        <Stack.Screen name="AddMeal" component={AddMealScreen} />
         <Stack.Screen name="ConsumedMeal" component={ConsumedMealScreen} />
       </Stack.Navigator>
     </NavigationContainer>
