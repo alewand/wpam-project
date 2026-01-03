@@ -17,6 +17,7 @@ export const useConsumedMealScreen = () => {
   const action = route.params.action;
   const consumedMealId = route.params.consumedMealId;
   const amountInGrams = route.params.amountInGrams;
+  const source = route.params.source;
 
   const [grams, setGrams] = useState<number>(amountInGrams ?? DEFAULT_GRAMS);
 
@@ -34,7 +35,13 @@ export const useConsumedMealScreen = () => {
     await editConsumedMeal(consumedMealId, meal.mealId, grams);
   }, [editConsumedMeal, consumedMealId, meal.mealId, grams]);
 
-  const headerTitle = action === "add" ? t("addMealTitle") : t("editMealTitle");
+  const headerTitle =
+    action === "add"
+      ? t("addMealTitle")
+      : action === "edit"
+        ? t("editMealTitle")
+        : t("viewMealTitle");
+
   const confirmButtonName = action === "add" ? t("addButton") : t("saveButton");
   const isConfirmButtonDisabled = grams <= 0;
 
@@ -42,8 +49,12 @@ export const useConsumedMealScreen = () => {
   const isActionLoading = action === "add" ? isAddLoading : isEditLoading;
 
   const goBack = useCallback(() => {
-    navigation.navigate("BottomTabs", { screen: "Meal", params: { resetDate: false } });
-  }, [navigation]);
+    if (source === "SearchMeal") {
+      if (navigation.canGoBack()) navigation.goBack();
+    } else {
+      navigation.navigate("BottomTabs", { screen: "Meal", params: { resetDate: false } });
+    }
+  }, [navigation, source]);
 
   return {
     grams,

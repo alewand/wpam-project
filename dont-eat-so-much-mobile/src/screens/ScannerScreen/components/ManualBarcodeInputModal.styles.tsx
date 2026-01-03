@@ -6,6 +6,7 @@ import {
   WHITE,
   BLACK,
   MAIN_COLOR,
+  BACKDROP_COLOR,
 } from "../../../constants/colors";
 
 export const styles = StyleSheet.create({
@@ -14,7 +15,7 @@ export const styles = StyleSheet.create({
     padding: 24,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.55)",
+    backgroundColor: BACKDROP_COLOR,
   },
   card: {
     width: "100%",

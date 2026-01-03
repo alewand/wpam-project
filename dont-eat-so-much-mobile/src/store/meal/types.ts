@@ -44,3 +44,33 @@ export interface AddConsumedMealRequest {
 export interface EditConsumedMealRequest extends AddConsumedMealRequest {
   consumedMealId: string;
 }
+
+export interface SearchMealsParams {
+  query: string;
+  page?: number;
+  limit?: number;
+  onlyMyMeals?: boolean;
+}
+
+export interface SearchMealsResponse {
+  meals: Meal[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface CreateMealRequest {
+  barcode?: string;
+  name: string;
+  brand?: string;
+  energyKcalPer100g: number;
+  proteinPer100g: number;
+  fatPer100g: number;
+  carbohydratesPer100g: number;
+  saturatedFatPer100g?: number | null;
+  sugarsPer100g?: number | null;
+  fiberPer100g?: number | null;
+  saltPer100g?: number | null;
+  sodiumPer100g?: number | null;
+}

@@ -29,3 +29,6 @@ export const IMAGE_URL_LIMIT = 1024;
 export const BARCODE_LENGTH = 13;
 
 export const REFRESH_PRODUCTS_WITH_BARCODE_DAYS = 7;
+
+export const SEARCH_MEALS_DEFAULT_PAGE = 1;
+export const SEARCH_MEALS_DEFAULT_LIMIT = 10;

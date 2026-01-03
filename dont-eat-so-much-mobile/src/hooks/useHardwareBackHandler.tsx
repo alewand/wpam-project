@@ -1,21 +1,20 @@
 import { useCallback } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 export interface UseHardwareBackHandlerProps {
   handler: () => void;
 }
 
 export const useHardwareBackHandler = ({ handler }: UseHardwareBackHandlerProps) => {
-  const navigation = useNavigation();
-
   useFocusEffect(
     useCallback(() => {
-      const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-        e.preventDefault();
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
         handler();
+        return true;
       });
 
-      return unsubscribe;
-    }, [navigation, handler])
+      return () => backHandler.remove();
+    }, [])
   );
 };

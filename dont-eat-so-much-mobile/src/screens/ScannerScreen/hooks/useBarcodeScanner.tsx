@@ -4,9 +4,8 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } fr
 import { BarcodeScanningResult, PermissionResponse, useCameraPermissions } from "expo-camera";
 import { useGetMealByBarcode } from "../../../store/meal/api/useGetMealByBarcode";
 import { Meal } from "../../../store/meal/types";
-import { useSnackbar } from "../../../components/Snackbar/Snackbar";
-import { useTranslation } from "react-i18next";
-import { isValidBarcodeLength } from "../../../constants/constants";
+import { isBarcodeValid } from "../components/helpers";
+import { BARCODE_TIMEOUT } from "../../../constants/constants";
 
 export interface UseBarcodeScannerReturn {
   onBarcodeScanned: (scanResult: BarcodeScanningResult) => void;
@@ -15,12 +14,13 @@ export interface UseBarcodeScannerReturn {
   isTorchInUse: boolean;
   setIsTorchInUse: Dispatch<SetStateAction<boolean>>;
   handleGoBack: () => void;
-  barcode?: string | null;
+  barcode?: string;
   isLoading?: boolean;
   isMealNotFoundModalVisible: boolean;
   handleCloseMealNotFoundModal: () => void;
   isManualBarcodeInputModalVisible: boolean;
-  setIsManualBarcodeInputModalVisible: Dispatch<SetStateAction<boolean>>;
+  handleOpenManualBarcodeInputModal: () => void;
+  handleCloseManualBarcodeInputModal: () => void;
   handleManualBarcodeInput: (barcode: string) => void;
 }
 
@@ -28,38 +28,39 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
   const navigation = useNavigation<AppNavigation>();
   const [permission, requestPermission] = useCameraPermissions();
   const { getMealByBarcode, isLoading } = useGetMealByBarcode();
-  const { publish } = useSnackbar();
-  const { t } = useTranslation("errors");
+
+  const [barcode, setBarcode] = useState<string | undefined>(undefined);
+  const [lastScannedBarcode, setLastScannedBarcode] = useState<string | undefined>(undefined);
 
   const [isTorchInUse, setIsTorchInUse] = useState<boolean>(false);
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const [isMealNotFoundModalVisible, setIsMealNotFoundModalVisible] = useState<boolean>(false);
   const [isManualBarcodeInputModalVisible, setIsManualBarcodeInputModalVisible] =
     useState<boolean>(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
-  const [barcode, setBarcode] = useState<string | null>(null);
-  const debounceTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const onBarcodeScanned = useCallback(
     (scanResult: BarcodeScanningResult) => {
       if (isLoading || isProcessing) return;
 
-      const scannedBarcode = scanResult.data?.trim();
+      const scannedBarcode = scanResult.data;
 
-      if (!scannedBarcode || !isValidBarcodeLength(scannedBarcode.length)) {
+      if (
+        !scannedBarcode ||
+        !isBarcodeValid(scannedBarcode) ||
+        scannedBarcode === lastScannedBarcode
+      ) {
         return;
       }
 
-      if (scannedBarcode === lastScannedBarcode) return;
-
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
       debounceTimeout.current = setTimeout(() => {
         setBarcode(scannedBarcode);
         setLastScannedBarcode(scannedBarcode);
-      }, 300);
+      }, BARCODE_TIMEOUT);
     },
     [isLoading, isProcessing, lastScannedBarcode]
   );
@@ -102,23 +103,30 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
 
   const handleCloseMealNotFoundModal = useCallback(() => {
     setIsMealNotFoundModalVisible(false);
-    setBarcode(null);
-    setLastScannedBarcode(null);
+    setBarcode(undefined);
+    setLastScannedBarcode(undefined);
+  }, []);
+
+  const handleCloseManualBarcodeInputModal = useCallback(() => {
+    setIsManualBarcodeInputModalVisible(false);
+    setBarcode(undefined);
+    setLastScannedBarcode(undefined);
+  }, []);
+
+  const handleOpenManualBarcodeInputModal = useCallback(() => {
+    setIsManualBarcodeInputModalVisible(true);
   }, []);
 
   const handleManualBarcodeInput = useCallback(
     (manualBarcode: string) => {
       if (isLoading || isProcessing) return;
 
-      const trimmedBarcode = manualBarcode.trim();
-      if (!isValidBarcodeLength(trimmedBarcode.length)) {
-        return;
-      }
+      if (!isBarcodeValid(manualBarcode)) return;
 
-      if (trimmedBarcode === lastScannedBarcode) return;
+      if (manualBarcode === lastScannedBarcode) return;
 
-      setBarcode(trimmedBarcode);
-      setLastScannedBarcode(trimmedBarcode);
+      setBarcode(manualBarcode);
+      setLastScannedBarcode(manualBarcode);
     },
     [isLoading, isProcessing, lastScannedBarcode]
   );
@@ -127,33 +135,27 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
     async (barcode: string) => {
       setIsProcessing(true);
       try {
-        const { meal, error } = await getMealByBarcode(barcode);
+        const meal = await getMealByBarcode(barcode);
 
         if (meal) {
           navigateToConsumedMeal(meal);
-        } else if (error === "not-found") {
+        } else {
           setIsMealNotFoundModalVisible(true);
-        } else if (error === "network-error") {
-          publish(t("networkError"));
         }
       } finally {
         setIsProcessing(false);
       }
     },
-    [getMealByBarcode, navigateToConsumedMeal, publish, t]
+    [getMealByBarcode, navigateToConsumedMeal]
   );
 
   useEffect(() => {
-    if (barcode) {
-      fetchMealByBarcode(barcode);
-    }
+    if (barcode) fetchMealByBarcode(barcode);
   }, [barcode, fetchMealByBarcode]);
 
   useEffect(() => {
     return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
     };
   }, []);
 
@@ -169,7 +171,8 @@ export const useBarcodeScanner = (): UseBarcodeScannerReturn => {
     isLoading: isLoading || isProcessing,
     barcode,
     isManualBarcodeInputModalVisible,
-    setIsManualBarcodeInputModalVisible,
+    handleCloseManualBarcodeInputModal,
     handleManualBarcodeInput,
+    handleOpenManualBarcodeInputModal,
   };
 };

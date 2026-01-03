@@ -26,6 +26,7 @@ export const MealScreen = () => {
     isLoading,
     consumedMeals,
     handleBarcodePress,
+    handleAddMealPress,
     resetDate,
   } = useMealScreen();
 
@@ -37,13 +38,13 @@ export const MealScreen = () => {
           <TouchableOpacity style={styles.button} onPress={handleBarcodePress}>
             <Image style={styles.buttonIcon} source={barCodeIcon} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleAddMealPress}>
             <Image style={styles.buttonIcon} source={addProductIcon} />
           </TouchableOpacity>
         </View>
       </View>
     ),
-    [resetDate, handleBarcodePress]
+    [resetDate, handleBarcodePress, handleAddMealPress]
   );
 
   const EmptyList = useCallback(() => {

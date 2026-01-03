@@ -3,9 +3,8 @@ export const DEFAULT_GRAMS = 100;
 
 export const EAN13_LENGTH = 13;
 export const EAN8_LENGTH = 8;
+export const BARCODE_LENGTHS = [EAN13_LENGTH, EAN8_LENGTH];
+export const BARCODE_TIMEOUT = 300;
 
-export const VALID_BARCODE_LENGTHS = [EAN13_LENGTH, EAN8_LENGTH] as const;
-
-export const isValidBarcodeLength = (length: number): boolean => {
-  return VALID_BARCODE_LENGTHS.includes(length as (typeof VALID_BARCODE_LENGTHS)[number]);
-};
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_LIMIT = 10;

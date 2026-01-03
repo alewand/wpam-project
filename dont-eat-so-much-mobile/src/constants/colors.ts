@@ -25,3 +25,5 @@ export const SUGARS_COLOR = "#FFD93D";
 export const FIBER_COLOR = "#6BCF7F";
 export const SALT_COLOR = "#95A5A6";
 export const SODIUM_COLOR = "#3498DB";
+
+export const BACKDROP_COLOR = "rgba(0,0,0,0.55)";

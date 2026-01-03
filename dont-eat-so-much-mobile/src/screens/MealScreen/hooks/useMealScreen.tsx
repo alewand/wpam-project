@@ -8,7 +8,7 @@ import { useGetConsumedMeals } from "../../../store/meal/api/useGetConsumedMeals
 export const useMealScreen = () => {
   const navigation = useNavigation<AppNavigation>();
   const route = useRoute<RouteProp<BottomTabParamList, "Meal">>();
-  const { consumedMeals, isLoading } = useGetConsumedMeals();
+  const { isLoading, consumedMeals } = useGetConsumedMeals();
   const { deleteConsumedMeal, isLoading: isDeletingLoading } = useDeleteConsumedMeal();
 
   const resetDate = route.params?.resetDate;
@@ -20,6 +20,7 @@ export const useMealScreen = () => {
         meal,
         amountInGrams,
         action: "view",
+        source: "Meal",
       });
     },
     [navigation]
@@ -32,6 +33,7 @@ export const useMealScreen = () => {
         meal,
         amountInGrams,
         action: "edit",
+        source: "Meal",
       });
     },
     [navigation]
@@ -48,6 +50,10 @@ export const useMealScreen = () => {
     navigation.navigate("Scanner");
   }, [navigation]);
 
+  const handleAddMealPress = useCallback(() => {
+    navigation.navigate("SearchMeal");
+  }, [navigation]);
+
   return {
     onCardPress,
     onCardLongPress,
@@ -56,5 +62,6 @@ export const useMealScreen = () => {
     consumedMeals,
     resetDate,
     handleBarcodePress,
+    handleAddMealPress,
   };
 };

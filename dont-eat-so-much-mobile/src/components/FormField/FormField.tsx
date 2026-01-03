@@ -13,6 +13,7 @@ export interface FormFieldProps {
   error?: string;
   touched?: boolean;
   isPassword?: boolean;
+  keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
 }
 
 const alertIcon = require("../../assets/icons/alert.png");
@@ -28,6 +29,7 @@ export const FormField = ({
   error,
   touched,
   isPassword,
+  keyboardType = "default",
 }: FormFieldProps) => {
   const styles = useMemo(() => getStyles(!!error && !!touched), [error, touched]);
   const { t } = useTranslation("errors", { keyPrefix: "validation" });
@@ -53,6 +55,7 @@ export const FormField = ({
         onBlur={onBlur}
         value={value}
         secureTextEntry={isPassword && !isPasswordVisible}
+        keyboardType={keyboardType}
       />
       {isPassword && (
         <TouchableOpacity style={styles.icon} onPress={onEyeClick}>

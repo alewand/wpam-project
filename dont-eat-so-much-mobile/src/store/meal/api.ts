@@ -1,7 +1,15 @@
 import { createApi, FetchArgs } from "@reduxjs/toolkit/query/react";
 
 import { baseApiQuery } from "../api";
-import { AddConsumedMealRequest, ConsumedMeal, EditConsumedMealRequest, Meal } from "./types";
+import {
+  AddConsumedMealRequest,
+  EditConsumedMealRequest,
+  Meal,
+  SearchMealsResponse,
+  SearchMealsParams,
+  ConsumedMeal,
+  CreateMealRequest,
+} from "./types";
 import { selectSelectedDay } from "../date/selectors";
 import { RootState } from "../store";
 
@@ -18,34 +26,57 @@ export const mealApi = createApi({
       extraOptions: { isPrivate: true },
       providesTags: (result, error, barcode) => [{ type: "MealBarcode" as const, id: barcode }],
     }),
+    createMeal: builder.mutation<Meal, CreateMealRequest>({
+      query: (meal): FetchArgs => ({
+        url: `/meals`,
+        method: "POST",
+        body: meal,
+      }),
+      extraOptions: { isPrivate: true },
+    }),
+    searchMeals: builder.query<SearchMealsResponse, SearchMealsParams>({
+      query: (params): FetchArgs => {
+        const { query, page, limit, onlyMyMeals } = params;
+        const searchParams = new URLSearchParams();
+        searchParams.append("q", query);
+        if (page !== undefined) searchParams.append("page", page.toString());
+        if (limit !== undefined) searchParams.append("limit", limit.toString());
+        if (onlyMyMeals !== undefined) searchParams.append("onlyMyMeals", onlyMyMeals.toString());
+        return {
+          url: `/meals/search?${searchParams.toString()}`,
+          method: "GET",
+        };
+      },
+      extraOptions: { isPrivate: true },
+    }),
     getConsumedMeals: builder.query<ConsumedMeal[], string>({
       query: (date): FetchArgs => ({
         url: `/consumed-meals/${encodeURIComponent(date)}`,
         method: "GET",
       }),
       extraOptions: { isPrivate: true },
-      providesTags: (result, error, date) => [{ type: "ConsumedMeal" as const, id: date }],
+      providesTags: (_result, _error, date) => [{ type: "ConsumedMeal" as const, id: date }],
     }),
     addConsumedMeal: builder.mutation<void, AddConsumedMealRequest>({
-      query: (consumedMeal): FetchArgs => ({
+      query: (body): FetchArgs => ({
         url: `/consumed-meals`,
         method: "POST",
-        body: consumedMeal,
+        body,
       }),
       extraOptions: { isPrivate: true },
-      invalidatesTags: (result, error, consumedMeal) => [
-        { type: "ConsumedMeal" as const, id: consumedMeal.consumedAt },
+      invalidatesTags: (_result, _error, addConsumedMealRequest) => [
+        { type: "ConsumedMeal" as const, id: addConsumedMealRequest.consumedAt },
       ],
     }),
     editConsumedMeal: builder.mutation<void, EditConsumedMealRequest>({
-      query: ({ consumedMealId, ...rest }): FetchArgs => ({
+      query: ({ consumedMealId, ...body }): FetchArgs => ({
         url: `/consumed-meals/${encodeURIComponent(consumedMealId)}`,
         method: "PUT",
-        body: rest,
+        body,
       }),
       extraOptions: { isPrivate: true },
-      invalidatesTags: (result, error, editRequest) => [
-        { type: "ConsumedMeal" as const, id: editRequest.consumedAt },
+      invalidatesTags: (_result, _error, { consumedMealId }) => [
+        { type: "ConsumedMeal" as const, id: consumedMealId },
       ],
     }),
     deleteConsumedMeal: builder.mutation<void, string>({
@@ -59,8 +90,10 @@ export const mealApi = createApi({
         const selectedDay = selectSelectedDay(state).toISODate() ?? "";
         const patchResult = dispatch(
           mealApi.util.updateQueryData("getConsumedMeals", selectedDay, (draft) => {
-            const idx = draft.findIndex((x) => x.consumedMealId === consumedMealId);
-            if (idx !== -1) draft.splice(idx, 1);
+            const index = draft.findIndex((x) => x.consumedMealId === consumedMealId);
+            if (index !== -1) {
+              draft.splice(index, 1);
+            }
           })
         );
 
@@ -81,4 +114,6 @@ export const {
   useDeleteConsumedMealMutation,
   useLazyGetConsumedMealsQuery,
   useGetConsumedMealsQuery,
+  useLazySearchMealsQuery,
+  useCreateMealMutation,
 } = mealApi;
