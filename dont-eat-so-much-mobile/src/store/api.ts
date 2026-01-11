@@ -9,7 +9,7 @@ import { clearUserCredentials, updateTokens } from "./auth/slice";
 import { getErrorStatus, getErrorType } from "./helpers";
 import { EXPIRED_ACCESS_TOKEN } from "../constants/errors";
 
-const API_BASE_URL = "http://192.168.1.17:3000/api/v1";
+const API_BASE_URL = "http://192.168.1.213:3000/api/v1";
 
 interface ExtraOptions {
   isPrivate?: boolean;
